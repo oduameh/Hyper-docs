@@ -1,44 +1,30 @@
 # Schemas {#schemas}
 
-## Overview
+Credential schemas define the structure and attributes of verifiable credentials. They specify which claims a credential contains, their data types, and any validation rules. Schemas enable semantic interoperability—when a verifier receives a credential, the schema explains what each claim represents.
 
-Credential schemas define the structure and attributes of verifiable credentials. They specify which claims a credential contains, their data types, and validation rules. Schemas ensure semantic interoperability – when a verifier receives a credential, the schema helps them understand what the credential claims mean.
+Hyperledger Identus supports two schema families:
 
-Hyperledger Identus supports W3C Verifiable Credentials JSON Schema 2022 and AnonCreds schemas. This section explains schema concepts, attributes, and operations for creating, updating, and managing schemas.
+- [Verifiable Credentials JSON Schema 2022](https://www.w3.org/TR/vc-json-schema/).
+- [AnonCreds schema](https://hyperledger.github.io/anoncreds-spec/#term:schemas).
 
----
+This guide describes schema concepts, required attributes, and the operations used to create, update, and manage schemas in Identus.
 
-## Credential schema introduction
+Signed credential schemas support the following checks:
 
-## Abstract
+- Semantic verification of verifiable credentials.
+- Authorship verification.
 
-This document describes the purpose, supported formats, and technical details of the Credential Schema implementation in the Identus Platform.
+Authors can use a credential schema to issue these credential types:
 
-## Introduction
+- JSON verifiable credential.
+- JSON-LD verifiable credential.
+- AnonCred verifiable credential.
+- Any of the above encoded as a JWT.
 
-[Credential Schema](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#credential-schema) is a data template for [Verifiable Credentials](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#verifiable-credential). It contains [claims](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#claims) (attributes) of the Verifiable Credentials, credential schema author, type, name, version, and proof of authorship. By putting schema definitions on a public blockchain, they are available for all verifiers to examine to determine the semantic interoperability of the Credential.
+Identus currently imposes two limitations:
 
-The Identus Platform supports the following specifications of the credential schemas:
-
-- [Verifiable Credentials JSON Schema 2022](https://www.w3.org/TR/vc-json-schema/)  
-- [AnonCreds Schema](https://hyperledger.github.io/anoncreds-spec/#term:schemas)
-
-The signed credential schema allows doing following verifications:
-
-- semantic verification of the verifiable credentials  
-- authorship verification
-
-The author can use credential schema to issue the following types of verifiable credentials:
-
-- JSON Verifiable Credential  
-- JSON-LD Verifiable Credential  
-- Anoncred Verifiable Credential  
-- all types above but encoded as JWT
-
-Limitations and constraints of the Identus Platform:
-
-- The Issuer does not sign the Credential Schema  
-- The Issuer does not publish the Credential Schema to the VDR (the Cardano blockchain)
+- The issuer does not sign the credential schema.
+- The issuer does not publish the credential schema to the verifiable data registry (the Cardano blockchain).
 
 ## Terminology
 
