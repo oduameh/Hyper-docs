@@ -37,24 +37,37 @@ export API_KEY=<your-api-key-value>
 
 Alternatively, replace `$API_KEY` with your key in the CURL commands throughout these tutorials. :::
 
-[Hyperledger Identus – develop section](#hyperledger-identus-–-develop-section)
+- [Quick start guide](./Quick%20start%20guide.md)
+- [Connections](./Connections.md)
+- [DIDs](./DIDs.md)
+- [Schemas](./Schemas.md)
+- [Credential definitions](./Credential%20definitions.md)
+- [Multi-tenancy](./Multi-tenancy.md)
+- [Secret management](./Secret%20management.md)
+- [VDR management](./VDR%20management.md)
+- [Webhooks](./Webhooks.md)
+- [Troubleshooting and considerations](./Troubleshooting%20and%20considerations.md)
 
-[Quick start guide](#quick-start-guide)
+---
 
-[Connections](#connections)
+{{#include Hyperledger Identus – develop section.md}}
 
-[DIDs](#dids)
+{{#include Quick start guide.md}}
 
-[Schemas](#schemas)
+{{#include Connections.md}}
 
-[Credential definitions](#credential-definitions)
+{{#include DIDs.md}}
 
-[Multi-tenancy](#multi-tenancy)
+{{#include Schemas.md}}
 
-[Secret management](#secret-management)
+{{#include Credential definitions.md}}
 
-[VDR management](#vdr-management)
+{{#include Multi-tenancy.md}}
 
-[Webhooks](#webhooks)
+{{#include Secret management.md}}
 
-[Troubleshooting and considerations](#troubleshooting-and-considerations)
+{{#include VDR management.md}}
+
+{{#include Webhooks.md}}
+
+{{#include Troubleshooting and considerations.md}}
