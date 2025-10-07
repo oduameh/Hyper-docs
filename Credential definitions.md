@@ -1,24 +1,8 @@
 # Credential definitions {#credential-definitions}
 
-## Overview
+Credential definitions extend AnonCreds schemas with the cryptographic material required for zero-knowledge proofs and selective disclosure. Each definition references a schema and publishes the issuer’s public keys so verifiers can validate credentials securely. This guide explains the structure of a definition and how to create one with the Cloud agent APIs.
 
-Credential definitions are specific to AnonCreds and build upon credential schemas. While schemas define the structure of credentials, credential definitions contain the cryptographic material needed for privacy-preserving features like zero-knowledge proofs and selective disclosure. Each credential definition is tied to a specific schema and includes the issuer's public keys for that credential type.
-
-This section covers creating and managing AnonCreds credential definitions for privacy-preserving credentials.
-
----
-
-## Credential definition introduction
-
-## Abstract
-
-This document details the structure, supported formats, and technical intricacies of Anoncred Credential Definitions within the Identus Platform.
-
-## Introduction
-
-An Anoncred Credential Definition serves as a standardized format for any given Anoncred Verifiable Credential. By embedding essential attributes unique to each type of credential, it lays the groundwork for diverse categories of verifiable credentials. Integrating this definition on a public blockchain ensures its availability and verifiability for all stakeholders.
-
-The Identus Platform endorses the Anoncred Credential Definition, conforming to the [Hyperledger AnonCreds specification](https://hyperledger.github.io/anoncreds-spec/#term:schemas).
+The Identus platform implements the [Hyperledger AnonCreds specification](https://hyperledger.github.io/anoncreds-spec/#term:schemas), so every definition that you publish remains compatible with other AnonCreds agents.
 
 ## AnonCred credential definition attributes
 
@@ -134,15 +118,11 @@ Specifies if the credential definition incorporates revocation capabilities.
 
 ---
 
-## Conclusion
+## Conclusion and references
 
-The Anoncred Credential Definition is a versatile tool that offers a standardized approach for an array of verifiable credentials. By ensuring its correct incorporation within the Identus Platform, the issuance and validation processes of various credentials can be streamlined and made more efficient.
-
-## References
+AnonCred credential definitions provide a consistent format for verifiable credentials across ecosystems. Replace the placeholders (for example, `{{CREDENTIAL_NAME}}` and `{{VERSION_NUMBER}}`) with production values before you publish a definition.
 
 - [Hyperledger AnonCreds specification](https://hyperledger.github.io/anoncreds-spec/#term:schemas)
-
-**Note:** Throughout the implementation phase within the Identus Platform, it's crucial to replace placeholders (such as `{{CREDENTIAL_NAME}}`, `{{VERSION_NUMBER}}`, and others) with their real, intended values.
 
 ---
 
@@ -156,7 +136,10 @@ In this document, you can find step-by-step instructions for creating the creden
 
 ## Prerequisites
 
-Before creating a credential definition, one must first create and then publish [prism DID](http://../dids/create.md), and then [create a credential schema](http://../schemas/create.md) to be used for the credential definition. Credential schema for credential definition **must** have a type of `AnoncredSchemaV1` as shown in [this](http://../schemas/credential-schema#schema-anoncred-schema) example.
+Before you create a credential definition, complete the following tasks:
+
+1. Create and publish a [PRISM DID](http://../dids/create.md).
+2. [Create a credential schema](http://../schemas/create.md) with the type `AnoncredSchemaV1`, as shown in the [example](http://../schemas/credential-schema#schema-anoncred-schema).
 
 ## Step-by-step guide
 

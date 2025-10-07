@@ -2,15 +2,15 @@
 
 ## Introduction to self-sovereign identity (SSI)
 
-[Self-sovereign identity (SSI)](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#self-sovereign-identity) is complex. This Quick Start Guide explains the fundamental concepts to get up and running with Hyperledger Identus. This guide will familiarize you with the general concepts and how to create [decentralized identifiers (DIDs)](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#decentralized-identifier), issue credentials, make connections, and verify credentials with [verifiable presentations](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#verifiable-presentation). Refer to the Concepts and Components sections for a more in-depth explanation.
+[Self-sovereign identity (SSI)](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#self-sovereign-identity) is complex. This guide highlights the essential Hyperledger Identus concepts so you can create [decentralized identifiers (DIDs)](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#decentralized-identifier), issue credentials, make connections, and verify credentials with [verifiable presentations](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#verifiable-presentation). For deeper explanations, review the Concepts and Components sections.
 
-The trust triangle is the most basic process for conveying trust in the digital world. There are three roles in an SSI ecosystem: [Holders](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#holder), [Issuers](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#issuer), and [Verifiers](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#verifier).
+The trust triangle is the core process for conveying digital trust. Each SSI ecosystem includes three roles: [Holders](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#holder), [Issuers](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#issuer), and [Verifiers](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#verifier).
 
-Holders can be any entity, such as individuals, organizations, and digital or physical things. They will hold [verifiable credentials (VCs)](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#verifiable-credential) and use a verifiable presentation to share their VCs.
+Holders can be any entity, such as individuals, organizations, or digital and physical things. They store [verifiable credentials (VCs)](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#verifiable-credential) and share them by creating verifiable presentations.
 
-Issuers can also be any entity that makes [claims](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#claim) about an [entity](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#entity). These claims are attestations, or evidence of something, about the Holder. As an example, an insurance company would provide proof of valid insurance.
+Issuers can also be any entity that makes [claims](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#claim) about an [entity](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#entity). These claims are attestations, or evidence of something, about the holder. For example, an insurance company can provide proof of valid insurance.
 
-Verifiers are the [relying party](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#relying-party) in the triangle. They will request information from the Holder, such as proof of insurance, and the Holder will use a verifiable presentation to share the appropriate VCs with the Verifier. The Holder's digital signature, the issuer DID get verified, and the contents therein to ensure nothing has been tampered with.
+Verifiers are the [relying party](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#relying-party) in the triangle. They request information from the holder, such as proof of insurance, and the holder responds with a verifiable presentation that contains the relevant VCs. The verifier checks the holder's digital signature, verifies the issuer DID, and reviews the credential contents to ensure nothing has been tampered with.
 
 ## Hyperledger Identus flow
 
@@ -22,39 +22,39 @@ Identus consists of core libraries that facilitate typical SSI interactions betw
 
 ### Cloud agent
 
-A Cloud agent can issue, hold, and verify [verifiable credentials (VCs)](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#verifiable-credential) for any entity and manage [decentralized identifiers (DIDs)](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#decentralized-identifier) and DID-based connections. The Cloud agent has an easy-to-use REST API to enable easy integration into any solution and uses [DIDComm V2](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#didcomm) as a messaging protocol for Cloud agent-to-Cloud agent communication.
+A Cloud agent can issue, hold, and verify [verifiable credentials (VCs)](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#verifiable-credential) for any entity and manage [decentralized identifiers (DIDs)](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#decentralized-identifier) and DID-based connections. The Cloud agent provides a REST API for straightforward integration into any solution and uses [DIDComm V2](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#didcomm) for Cloud agent-to-Cloud agent communication.
 
-It is maintained as an open source through the [Hyperledger Identus](https://www.hyperledger.org/projects/identus).
+It is maintained as an open-source project through [Hyperledger Identus](https://www.hyperledger.org/projects/identus).
 
-More in-depth documentation about [Cloud agent](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#cloud-agent) can be found in the [Cloud agent overview](https://hyperledger-identus.github.io/docs/home/identus/cloud-agent/overview).
+For additional context, review the [Cloud agent overview](https://hyperledger-identus.github.io/docs/home/identus/cloud-agent/overview).
 
 ### Wallet SDKs
 
 [Wallet SDKs](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#wallet-sdk) for web and mobile (iOS, Android, TypeScript) enable identity holders to store credentials and respond to proof requests. They are typically used in applications that allow identity holders to interact with issuers and verifiers.
 
-More in-depth documentation about the different Wallet SDKs can be found here ([TypeScript](https://hyperledger-identus.github.io/docs/sdk-ts/sdk/), [Swift](https://hyperledger-identus.github.io/sdk-swift/documentation/edgeagentsdk/), [KMP](https://hyperledger-identus.github.io/sdk-kmp/))
+Explore the detailed documentation for each SDK: [TypeScript](https://hyperledger-identus.github.io/docs/sdk-ts/sdk/), [Swift](https://hyperledger-identus.github.io/sdk-swift/documentation/edgeagentsdk/), and [KMP](https://hyperledger-identus.github.io/sdk-kmp/).
 
 ### Mediator
 
-[Mediators](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#mediator) are for storing and relaying messages between Cloud agents and Wallet SDKs. They act as a proxy that remains connected to the network and receives any message, credential, or proof request on behalf of the Wallet SDKs (which can be offline occasionally).
+[Mediators](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#mediator) store and relay messages between Cloud agents and Wallet SDKs. They act as a proxy that remains connected to the network and receives any message, credential, or proof request on behalf of the Wallet SDKs, which can occasionally be offline.
 
-More in-depth documentation about Mediator can be found in the [Mediator documentation](https://hyperledger-identus.github.io/docs/home/identus/mediator).
+Learn more in the [Mediator documentation](https://hyperledger-identus.github.io/docs/home/identus/mediator).
 
-**Node for a Verifiable Data Registry (VDR)**   
-To issue and verify VCs to and from DIDs, we need a [Verifiable Data Registry (VDR)](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#verifiable-data-registry) that is globally resolvable and always on. In Identus's case, it is `prism-node`, [anchoring](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#anchoring) key information required for issuance and verification on the Distributed Ledger.
+**Node for a Verifiable Data Registry (VDR)**
+To issue and verify VCs with DIDs, we need a [Verifiable Data Registry (VDR)](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#verifiable-data-registry) that is globally resolvable and always on. In Identus's case, it is `prism-node`, [anchoring](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#anchoring) key information required for issuance and verification on the distributed ledger.
 
 ## Prerequisites
 
 ### Agent deployment
 
-This guide will demonstrate a single-tenant deployment with API Key authentication disabled and an in-memory ledger for published DID storage, which is the simplest configuration to get started as a developer. More advanced configuration options can be found in [Multi-Tenancy Management](https://hyperledger-identus.github.io/docs/tutorials/multitenancy/tenant-onboarding) and associated [Environment Variables](https://hyperledger-identus.github.io/docs/home/identus/cloud-agent/environment-variables) configuration options.
+This guide demonstrates a single-tenant deployment with API Key authentication disabled and an in-memory ledger for published DID storage, which is the simplest configuration for new developers. For advanced configurations, review the [Multi-Tenancy Management](https://hyperledger-identus.github.io/docs/tutorials/multitenancy/tenant-onboarding) tutorial and the associated [environment variables](https://hyperledger-identus.github.io/docs/home/identus/cloud-agent/environment-variables).
 
-We develop on modern machines equipped with either Intel-based x64 processors or Apple ARM processors with a minimum of four cores, 16 GB of memory, and 128GB+ of SSD-type storage.
+Develop on modern machines equipped with either Intel-based x64 processors or Apple ARM processors with a minimum of four cores, 16 GB of memory, and at least 128 GB of SSD storage.
 
-1. To spin up a Cloud agent ,you must:  
-* Have Git installed.  
-* Have Docker installed.  
-* Clone the [Identus Cloud agent repository](https://github.com/hyperledger/identus-cloud-agent).
+1. Prepare to spin up a Cloud agent. Ensure that you:
+   * Have Git installed
+   * Have Docker installed
+   * Clone the [Identus Cloud agent repository](https://github.com/hyperledger/identus-cloud-agent)
 
 ```shell
 git clone https://github.com/hyperledger/identus-cloud-agent
@@ -84,7 +84,7 @@ VAULT_DEV_ROOT_TOKEN_ID=root
 PG_PORT=5433
 ```
 
-4. Setting the `API_KEY_ENABLED` to `false` disables the requirement of using API Keys.
+4. Setting the `API_KEY_ENABLED` parameter to `false` disables the requirement of using API keys.
 
 :::caution
 
@@ -92,10 +92,10 @@ API\_KEY\_ENABLED disables API Key authentication. This should **not** be used b
 
 :::
 
-5. Start the `issuer` and `verifier` Cloud agents by running the below commands in the terminal.  
+5. Start the `issuer` and `verifier` Cloud agents by running the following commands.
 * Issuer Cloud agent:
 
-Mac OSX  terminal shell
+macOS terminal shell
 
 ```shell
  ./infrastructure/local/run.sh -n issuer -b -e ./infrastructure/local/.env-issuer -p 8000 -d "$(ipconfig getifaddr $(route get default | grep interface | awk '{print $2}'))"
@@ -107,11 +107,11 @@ Linux terminal shell
  ./infrastructure/local/run.sh -n issuer -b -e ./infrastructure/local/.env-issuer -p 8000 -d "$(ip addr show $(ip route show default | awk '/default/ {print $5}') | grep 'inet ' | awk '{print $2}' | cut -d/ -f1)"
 ```
 
-* The Issuer [API endpoint](http://localhost:8000/cloud-agent/) will be accessible on port 8000 `http://localhost:8000/cloud-agent/` with a [Swagger Interface](http://localhost:8000/cloud-agent/redoc) available at `http://localhost:8000/cloud-agent/redoc`.  
+* The Issuer [API endpoint](http://localhost:8000/cloud-agent/) is accessible on port 8000 at `http://localhost:8000/cloud-agent/` with a [Swagger interface](http://localhost:8000/cloud-agent/redoc) available at `http://localhost:8000/cloud-agent/redoc`.
     
 * Verifier Cloud agent:
 
-For Mac OSX  terminal shell
+For macOS terminal shell
 
 ```shell
  ./infrastructure/local/run.sh -n verifier -b -e ./infrastructure/local/.env-verifier -p 9000 -d "$(ipconfig getifaddr $(route get default | grep interface | awk '{print $2}'))"
@@ -123,7 +123,7 @@ For the Linux terminal shell
  ./infrastructure/local/run.sh -n verifier -b -e ./infrastructure/local/.env-verifier -p 9000 -d "$(ip addr show $(ip route show default | awk '/default/ {print $5}') | grep 'inet ' | awk '{print $2}' | cut -d/ -f1)"
 ```
 
-* The Verifier [API endpoint](http://localhost:9000/cloud-agent/) will be accessible on port 9000 `http://localhost:9000/cloud-agent/` with a [Swagger Interface](http://localhost:9000/cloud-agent/redoc) available at `http://localhost:9000/cloud-agent/redoc`.
+* The Verifier [API endpoint](http://localhost:9000/cloud-agent/) is accessible on port 9000 at `http://localhost:9000/cloud-agent/` with a [Swagger interface](http://localhost:9000/cloud-agent/redoc) available at `http://localhost:9000/cloud-agent/redoc`.
 
 ### Agent configuration
 
@@ -166,7 +166,7 @@ curl --location \
 --header 'Accept: application/json'
 ```
 
-3. The short version of the DID is the publishedPrismDID.
+3. The short version of the DID is the `publishedPrismDID`.
 
 :::info
 
@@ -184,7 +184,7 @@ Replace the `[[publishedPrismDID]]` in the example request with the `did` value 
 
 :::
 
-2. We need to capture the schema's guid as its used in further steps.
+2. Capture the schema GUID because it is used in later steps.
 
 ```shell
 curl -X 'POST' \
@@ -242,7 +242,7 @@ curl -X 'POST' \
 
 ### Starting sample app
 
-All wallet SDK's come bundled with a sample application, that cover all the Identus flows, including establishing connections, issuance, and verification flows.
+All wallet SDKs come bundled with a sample application that covers the Identus flows, including establishing connections, issuance, and verification.
 
 1. Clone the [TypeScript SDK](https://github.com/hyperledger-identus/sdk-ts) repository.
 
@@ -250,18 +250,18 @@ All wallet SDK's come bundled with a sample application, that cover all the Iden
 git clone -b v6.6.0 https://github.com/hyperledger-identus/sdk-ts
 ```
 
-2. Ensure you have all applications installed for building the SDK and their dependencies
+2. Ensure you install all applications required to build the SDK and its dependencies.
 
 [rust](https://www.rust-lang.org/tools/install) and [wasm-pack](https://rustwasm.github.io/wasm-pack/installer/) are leveraged to build and use the AnonCreds and DIDComm Rust libraries within TypeScript. To build the SDK locally or run demonstration applications, you must have these applications installed.
 
-The following should work Linux and MacOS. If you experience any issues, refer to the latest installation instructions for your platform.
+The following commands work on Linux and macOS. If you experience any issues, refer to the latest installation instructions for your platform.
 
 ```
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
 ```
 
-3. Run the following:  
+3. Run the following commands:
 * Build the source SDK:
 
 ```shell
@@ -280,33 +280,33 @@ npm run build
 npm run start
 ```
 
-* This will start the React Wallet SDK TypeScript Demonstration at [http://localhost:3000](http://localhost:3000).  
+* This command starts the React Wallet SDK TypeScript demonstration at [http://localhost:3000](http://localhost:3000).
 1. Clone the [Swift SDK](https://github.com/hyperledger/identus-edge-agent-sdk-swift) repository.
 
 ```shell
 git clone https://github.com/hyperledger/identus-edge-agent-sdk-swift
 ```
 
-2. Open the XCode project on **./Sample/AtalaPrismWalletDemo/AtalaPrismWalletDemo.xcodeproj**  
-3. On the top left of the XCode window you will see a Play/Run button, click it.  
-4. The app will start.  
-5. Click Wallet Demo 2.0  
-* You will be able to run the rest of the guide here.  
+2. Open the Xcode project at **./Sample/AtalaPrismWalletDemo/AtalaPrismWalletDemo.xcodeproj**.
+3. In the top-left corner of the Xcode window, click the Play/Run button.
+4. The app will start.
+5. Click Wallet Demo 2.0
+* You will be able to run the rest of the guide here.
 1. Clone the [KMM SDK](https://github.com/hyperledger/identus-edge-agent-sdk-kmm) repository.
 
 ```shell
 git clone https://github.com/hyperledger/identus-edge-agent-sdk-kmm
 ```
 
-2. Open the Wallet SDK project on IntelliJ or Android Studio.  
+2. Open the Wallet SDK project in IntelliJ IDEA or Android Studio.
 3. In the `Run configuration` dropdown, select SampleApp.  
 4. Select the device or emulator you want to use.  
 5. Click "Run".  
-* The SampleApp will launch on the applicable device or emulator.
+* The SampleApp launches on the applicable device or emulator.
 
 ### Deploy and establish mediation
 
-Mediation is the process that ensures messages get routed and stored correctly between Issuers, Verifiers and Holders, even if they are offline. The mediator offers a service that is always running and can securely store messages and deliver them to the associated DIDs using DIDComm. This enables use-cases where connectivity to a (mobile) wallet cannot be guaranteed.
+Mediation ensures messages are routed and stored correctly between Issuers, Verifiers, and Holders, even if they are offline. The mediator offers an always-on service that securely stores messages and delivers them to the associated DIDs by using DIDComm. This capability enables use cases where connectivity to a mobile wallet cannot be guaranteed.
 
 **Preparation**
 
@@ -324,7 +324,7 @@ The latest mediator version can be found at [Mediator releases](https://github.c
 
 :::
 
-Mac OSX  terminal shell
+macOS terminal shell
 
 ```shell
 MEDIATOR_VERSION=1.1.0 SERVICE_ENDPOINTS="http://$(ipconfig getifaddr $(route get default | grep interface | awk '{print $2}')):8080;ws://$(ipconfig getifaddr $(route get default | grep interface | awk '{print $2}')):8080/ws" docker compose up
@@ -338,9 +338,9 @@ MEDIATOR_VERSION=1.1.0 SERVICE_ENDPOINTS="http://$(ip addr show $(ip route show 
 
 `MEDIATOR_ENDPOINTS` is then set to your local IP address:8080.
 
-3. More advanced documentation and configuration options see the \[https://github.com/hyperledger/identus-mediator).  
-     
-4. Now you need to capture the Mediator's [Peer DID](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#peer-did) in order to start DIDCOMM V2 Mediation protocol, you can do so by opening you browser at the mediators [endpoint](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#endpoints).
+3. For advanced documentation and configuration options, see the [Mediator repository](https://github.com/hyperledger/identus-mediator).
+
+4. Capture the mediator's [Peer DID](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#peer-did) to start the DIDComm V2 mediation protocol. Open your browser and navigate to the mediator [endpoint](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#endpoints) to obtain the DID.
 
 **Demo application**
 
@@ -356,20 +356,23 @@ curl --location \
 
 :::
 
-Follow the steps in your desired platform as stated below:
+Follow the steps on your chosen platform:
 
-1. Open [http://localhost:3000/debug](http://localhost:3000/debug) in your browser,  
-2. paste the mediator peer DID (obtained from the `from` attribute after fetching from the mediator's invitation endpoint),  
-3. click **Edge Agent** tab in the bottom left,  
-4. click **Connect** button,  
-5. click **Start** button.  
-1. In the app, go to Wallet Demo, and on the Mediator tab, insert the mediator DID.  
-1. Go back to the Sample app. In the main screen, you can provide the mediator DID of your choice or use what is there already. Proceed and click **Start** after.  
-2. If you are running the SampleApp, click the **Start Agent** button.
+* **TypeScript SDK demo**
+  1. Open [http://localhost:3000/debug](http://localhost:3000/debug) in your browser.
+  2. Paste the mediator peer DID obtained from the `from` attribute after fetching the mediator's invitation endpoint.
+  3. Click the **Edge Agent** tab in the bottom left.
+  4. Click **Connect**.
+  5. Click **Start**.
+* **Swift demo app**
+  1. In the app, go to Wallet Demo and, on the Mediator tab, insert the mediator DID.
+* **KMM demo app**
+  1. Return to the Sample app. On the main screen, provide the mediator DID of your choice or use the default value. Proceed and click **Start**.
+  2. If you are running the SampleApp, click the **Start Agent** button.
 
-The below code examples show how to establish mediation when building your own application.
+The following code examples show how to establish mediation when you build your own application.
 
-Code examples 3\. The following code examples represent establishing mediation and instantiating the Cloud agent. 
+These examples demonstrate how to establish mediation and instantiate the Cloud agent.
 
 ```ts
   const mediatorDID = SDK.Domain.DID.fromString(
@@ -441,11 +444,11 @@ agent.startFetchingMessages()
 
 ## Establish holder connections
 
-To connect the Holder to both Cloud agent instances, you must run this in both Issuer and Verifier endpoints.
+To connect the holder to both Cloud agent instances, run the commands in both Issuer and Verifier endpoints.
 
 ### Establish a connection on the agent side
 
-A connection must be established between the Holder and Cloud agents to correctly deliver the Issuance \+ Verification Messages to the Holder.
+A connection must be established between the holder and Cloud agents to deliver issuance and verification messages to the holder.
 
 **Establish connection on the Issuer Cloud agent**
 
@@ -458,7 +461,7 @@ curl --location \
 }'
 ```
 
-1. This request will return a JSON response with an invitation and its URL. The Issuer Cloud agent would share this URL as a QR code, and the holder would scan it with the wallet app.  
+1. This request returns a JSON response with an invitation and its URL. The Issuer Cloud agent shares this URL as a QR code, and the holder scans it with the wallet app.
 * Copy the `invitationUrl` and the `connectionId`.
 
 **Establish connection on the Verifier Cloud agent**
@@ -472,25 +475,29 @@ curl --location \
 }'
 ```
 
-2. This request will return a JSON response with an invitation and its URL. The Verifier Cloud agent would share this URL as a QR code, and the holder would scan it with the wallet app.  
+2. This request returns a JSON response with an invitation and its URL. The Verifier Cloud agent shares this URL as a QR code, and the holder scans it with the wallet app.
 * Copy the `invitationUrl` and the `connectionId`.
 
 ### Establish a connection on the holder side
 
-3. Now that you have the invitation, it's time for the Holder to accept it.
+3. Now that you have the invitation, the holder can accept it.
 
-**Demo application** 
+**Demo application**
 
-4. Open a browser at localhost:3000.  
-5. Start the Edge Agent by clicking the button.  
-6. Paste the invitation URL generated in the previous step into the `CloudAgent` connection section and click on Create Connection.  
-* The application will react when the connection gets established correctly and show a new connection.  
-4. On the Out of Bounds (OOB) dialog, paste the invitation URL we generated into the `CloudAgent` connection section and click **Validate**.  
-* The application will respond once the connection gets established correctly and show a message under messages.  
-4. Go back to the Application:  
-5. Click the floating button at the bottom right corner of the Contacts tab.  
-6. On the dialog, paste the invitation URL we generated into the `CloudAgent` connection section and click **Validate**.  
-* The application will react once the connection gets established correctly and show a message under messages.
+Follow the steps on your chosen platform:
+
+* **TypeScript SDK demo**
+  1. Open [http://localhost:3000](http://localhost:3000) in your browser.
+  2. Start the Edge Agent by clicking the button.
+  3. Paste the invitation URL generated in the previous step into the `CloudAgent` connection section and click **Create Connection**.
+  * The application displays a new connection when the process completes successfully.
+* **Swift demo app**
+  1. On the Out of Bounds (OOB) dialog, paste the invitation URL you generated into the `CloudAgent` connection section and click **Validate**.
+  * The application shows a message in the Messages section after the connection is established correctly.
+* **KMM demo app**
+  1. Return to the application and click the floating button in the bottom-right corner of the Contacts tab.
+  2. In the dialog, paste the invitation URL you generated into the `CloudAgent` connection section and click **Validate**.
+  * The application shows a message in the Messages section after the connection is established correctly.
 
 Code examples 
 
@@ -509,15 +516,18 @@ val invitation = agent.parseInvitation(oobUrl)
 agent.acceptOutOfBandInvitation(invitation)
 ```
 
-## Issue a Credential from the Issuer to the holder
+## Issue a credential from the issuer to the holder
 
-The credential issuance flow consists of multiple steps, detailed in this section. It starts with the Issuer sending a [Credential Offer](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#credential-offer) to the Holder, which would accept or reject this invitation and create a `credentialRequest` from it. The [credential request](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#credential-request) gets sent through DIDComm to the Issuer, issuing and sending the credential back to the Holder.
+The credential issuance flow consists of multiple steps, detailed in this section. It starts with the issuer sending a [credential offer](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#credential-offer) to the holder, which accepts or rejects the invitation and creates a `credentialRequest` from it. The [credential request](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#credential-request) is sent through DIDComm to the issuer, which issues the credential and returns it to the holder.
 
-The Issuer can create a credential offer in two ways:
+The issuer can create a credential offer in two ways:
 
-1. As a direct credential offer DIDComm message for a holder with an existing connection  
-2. As an credential offer as attachment in an OOB invitation message for connectionless issuance  
-1. \#\#\# Create a credential offer with an existing connection \*\*Issuer Agent\*\* To trigger the creation of a credential-offer, we call the credential-offers-endpoint, as follows:
+1. As a direct credential offer DIDComm message for a holder with an existing connection
+2. As a credential offer attachment in an out-of-band (OOB) invitation message for connectionless issuance
+
+### Create a credential offer with an existing connection (Issuer agent)
+
+To trigger the creation of a credential offer, call the credential-offers endpoint as follows:
 
 :::info
 
@@ -552,7 +562,9 @@ curl --location --request POST 'http://localhost:8000/cloud-agent/issue-credenti
 }'
 ```
 
-1. \#\#\# Create a credential offer as Invitation for connectionless issuance \*\*Issuer Agent\*\* To trigger the creation of a credential-offer, we call the credential-offers-invitation-endpoint, as follows:
+### Create a credential offer as an invitation for connectionless issuance (Issuer agent)
+
+To trigger the creation of a credential offer, call the credential-offers invitation endpoint as follows:
 
 :::info
 
@@ -586,19 +598,26 @@ curl --location --request POST 'http://localhost:8000/cloud-agent/issue-credenti
 }'
 ```
 
-### Accept credential offer invitation for connectionless issuance **Holder**
+### Accept a credential offer invitation for connectionless issuance (Holder)
 
-For connectionless issuance, the Holder needs to accept the invitation containing the credential offer. This step is necessary before creating the Credential Request. **Demo application** 
+For connectionless issuance, the holder must accept the invitation that contains the credential offer before creating the credential request.
 
-1. In the browser at localhost:3000, navigate to the "Credential Offer" section.  
-2. Paste the invitation URL received from the Issuer into the provided input field.  
-3. Click on "Accept Invitation" to process the credential offer.  
-1. In the Swift mobile app, go to the "Credential Offer" section.  
-2. Enter the invitation URL received from the Issuer.  
-3. Tap on "Accept Invitation" to process the credential offer.  
-1. In the Android mobile app, navigate to the "Credential Offer" section.  
-2. Input the invitation URL provided by the Issuer.  
-3. Tap "Accept Invitation" to process the credential offer.
+**Demo application**
+
+Follow the steps on your chosen platform:
+
+* **TypeScript SDK demo**
+  1. In the browser at [http://localhost:3000](http://localhost:3000), navigate to the **Credential Offer** section.
+  2. Paste the invitation URL received from the issuer into the input field.
+  3. Click **Accept Invitation** to process the credential offer.
+* **Swift mobile app**
+  1. Go to the **Credential Offer** section.
+  2. Enter the invitation URL received from the issuer.
+  3. Tap **Accept Invitation** to process the credential offer.
+* **Android mobile app**
+  1. Navigate to the **Credential Offer** section.
+  2. Input the invitation URL provided by the issuer.
+  3. Tap **Accept Invitation** to process the credential offer.
 
 Code examples 
 
@@ -617,7 +636,9 @@ val invitation = agent.parseInvitation(oobUrl)
 agent.acceptOutOfBandInvitation(invitation)
 ```
 
-2. \#\#\# Create CredentialRequest from CredentialOffer \*\*Holder\*\* Because this credential Offer was created with the `automaticIssuance` true, as soon as the `CloudAgent` receives this `credentialRequest` it will respond with the `IssuedCredential` message and send this back to the holder.
+### Create a credential request from a credential offer (Holder)
+
+Because this credential offer was created with `automaticIssuance` set to `true`, as soon as the Cloud agent receives the `credentialRequest` it responds with the `IssuedCredential` message and sends it back to the holder.
 
 :::info
 
@@ -625,9 +646,20 @@ automaticIssuance is optional. It can also be manually triggered and confirmed b
 
 :::
 
-**Demo application** 3\. The holder will at some point receive a `CredentialOffer`, which the holder must accept, and then, a `CredentialRequest` is created and sent back to the Issuer through DIDComm V2 protocols.
+**Demo application**
 
-5. 4\. The `CredentialOffer` message will be automatically accepted as soon as it reaches the browser. In exchange, a `CredentialRequest` message will get sent back to the \`CloudAgent.\` 4\. As soon as the `CredentialOffer` message reaches the Swift mobile app, it will display to the user to accept or reject, and in exchange, a `CredentialRequest` message will get sent back to the `CloudAgent`. 4\. As soon as the `CredentialOffer` message reaches the Android mobile app, it will be automatically accepted, and in exchange, a `CredentialRequest` message will get sent back to the `CloudAgent`. Code examples The exchange between CredentialOffer and CredentialRequest is demonstrated through more advanced code samples below, showcasing how different platforms handle it.
+The holder receives a `CredentialOffer`, accepts it, and then sends a `CredentialRequest` back to the issuer through DIDComm V2 protocols.
+
+* **TypeScript SDK demo**
+  * The `CredentialOffer` message is accepted automatically in the browser, which triggers a `CredentialRequest` message that is sent back to the Cloud agent.
+* **Swift mobile app**
+  * When the `CredentialOffer` message arrives, the user chooses to accept or reject it. After acceptance, a `CredentialRequest` message is sent back to the Cloud agent.
+* **Android mobile app**
+  * The `CredentialOffer` message is accepted automatically, which triggers a `CredentialRequest` message that is sent back to the Cloud agent.
+
+Code examples
+
+The exchange between `CredentialOffer` and `CredentialRequest` is demonstrated through the code samples below, showcasing how different platforms handle it.
 
 ```ts
 props.agent.addListener(ListenerKey.MESSAGE,async (newMessages:SDK.Domain.Message[]) => {
@@ -696,7 +728,7 @@ agent.handleReceivedMessagesEvents().collect { list ->
 }
 ```
 
-### Store the issued credential \[Holder\]
+### Store the issued credential (Holder)
 
 :::caution
 
@@ -704,7 +736,9 @@ The sample application are using an insecure storage solution which should only 
 
 :::
 
-Code examples 6\. Once the Holder receives a credential from the Cloud agent, it needs to store the credential somewhere: 
+Code examples
+
+Once the holder receives a credential from the Cloud agent, it needs to store the credential:
 
 ```ts
 props.agent.addListener(ListenerKey.MESSAGE,async (newMessages:SDK.Domain.Message[]) => {
@@ -756,14 +790,14 @@ agent.handleReceivedMessagesEvents().collect { list ->
 }
 ```
 
-## Request a verification from the Verifier Cloud agent to the Holder (JWT W3C Credential)
+## Request a verification from the verifier Cloud agent to the holder (JWT W3C Credential)
 
-Now that the Holder has received a credential, it can be used in a verification workflow between a Holder and a Verifier. This requires the following steps:
+Now that the holder has received a credential, it can be used in a verification workflow between a holder and a verifier. Complete the following steps:
 
-1. Verifier creates a proof request  
-2. Holder receives the proof request  
-3. Holder creates a proof presentation and shares this with the verifier  
-4. Verifier verifies the proof presentation
+1. The verifier creates a proof request
+2. The holder receives the proof request
+3. The holder creates a proof presentation and shares it with the verifier
+4. The verifier verifies the proof presentation
 
 :::info
 
@@ -774,7 +808,7 @@ In the example, we demonstrate two verification flows:
 
 ### Verifier agent
 
-5. To run this section, we will use [the connection](https://hyperledger-identus.github.io/docs/home/quick-start#establish-connection-on-the-verifier-cloud-agent) we created between the Holder and the Verifier.
+Use [the connection](https://hyperledger-identus.github.io/docs/home/quick-start#establish-connection-on-the-verifier-cloud-agent) you created between the holder and the verifier to request a presentation:
 
 ```shell
 curl --location \
@@ -797,8 +831,8 @@ curl --location \
 }'
 ```
 
-* This API request will return a `presentationRequestId,` which the verifier can use later to check the current status  of the request.  
-5. To run this section, we'll use the presentation invitation endpoint to create a request presentation invitation, which the holder can scan to receive the invitation or the verifier can share directly.
+* This API request returns a `presentationRequestId`, which the verifier can use later to check the current status of the request.
+To send a connectionless request, use the presentation invitation endpoint to create a request presentation invitation that the holder can scan or the verifier can share directly:
 
 ```shell
 curl --location \
@@ -823,21 +857,28 @@ curl --location \
 }'
 ```
 
-* This API request will return an `invitationId` along with an Out-Of-Band (OOB) message. The OOB message includes a Request Presentation in JSON format as an attachment and is encoded as a base64 URL-encoded string, which can be shared with the holder.
+* This API request returns an `invitationId` along with an out-of-band (OOB) message. The OOB message includes a request presentation in JSON format as an attachment and is encoded as a base64 URL-encoded string, which can be shared with the holder.
 
-### Accept request presentation invitation for connectionless verification **Holder**
+### Accept a request presentation invitation for connectionless verification (Holder)
 
-For connectionless verification, the Holder needs to accept the invitation containing the Request Presentation. **Demo application** 
+For connectionless verification, the holder needs to accept the invitation containing the request presentation.
 
-1. In the browser at localhost:3000, navigate to the "Request Presentation" section.  
-2. Paste the invitation URL received from the Issuer into the provided input field.  
-3. Click on "Accept Invitation" to process the request presentation.  
-1. In the Swift mobile app, go to the "Request Presentation" section.  
-2. Enter the invitation URL received from the Issuer.  
-3. Tap on "Accept Invitation" to process the request presentation.  
-1. In the Android mobile app, navigate to the "Request Presentation" section.  
-2. Input the invitation URL provided by the Issuer.  
-3. Tap "Accept Invitation" to process the request presentation.
+**Demo application**
+
+Follow the steps on your chosen platform:
+
+* **TypeScript SDK demo**
+  1. In the browser at [http://localhost:3000](http://localhost:3000), navigate to the "Request Presentation" section.
+  2. Paste the invitation URL received from the issuer into the provided input field.
+  3. Click **Accept Invitation** to process the request presentation.
+* **Swift mobile app**
+  1. Go to the "Request Presentation" section.
+  2. Enter the invitation URL received from the issuer.
+  3. Tap **Accept Invitation** to process the request presentation.
+* **Android mobile app**
+  1. Navigate to the "Request Presentation" section.
+  2. Input the invitation URL provided by the issuer.
+  3. Tap **Accept Invitation** to process the request presentation.
 
 Code examples 
 
@@ -856,9 +897,9 @@ val invitation = agent.parseInvitation(oobUrl)
 agent.acceptOutOfBandInvitation(invitation)
 ```
 
-### Holder: Receives the Presentation proof request
+### Holder: Receive the presentation proof request
 
-6. The Holder needs an Edge Agent running with the message listener active. It will receive the presentation proof request from the Verifier Cloud agent for the correct type of messages as detailed below:
+Ensure the holder runs an Edge Agent with the message listener active. It receives the presentation proof request from the Verifier Cloud agent for the correct message types, as detailed below:
 
 Code examples 
 
@@ -935,7 +976,7 @@ agent.handleReceivedMessagesEvents().collect { list ->
 }
 ```
 
-### Verifier: Will then check on the API if the Presentation Request has been completed or not.
+### Verifier: Check whether the presentation request has been completed
 
 ```shell
 curl --location \
@@ -943,4 +984,4 @@ curl --location \
 --header 'Accept: application/json'
 ```
 
-7. The response body establishes the completion of the request and can be verified for correctness.
+The response body confirms whether the request has been completed and can be verified for correctness.

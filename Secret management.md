@@ -14,21 +14,21 @@ This section covers secret storage architecture, key derivation, seed generation
 
 **Date**: 2021-06-02
 
-**NOTE**: this document is a draft and is not implemented yet. Statement in this document might be changed in the future.
+**NOTE**: This document describes a draft design that may change.
 
 ## Introduction
 
-Secrets are sensitive data that should be stored securely. There are following types of the secrets in the Identus Platform:
+Secrets are sensitive data that must be stored securely. The Identus platform manages the following secret types:
 
-- seed: a secret used to derive cryptographic keys  
-- private key: a secret used to sign data  
-- any other entities that contain sensitive data (for instance, `credential-definition` and the `link-secret` used by the AnonCreds)
+- Seed. Used to derive cryptographic keys.
+- Private key. Used to sign data.
+- Other sensitive entities, such as `credential-definition` and the `link-secret` used by AnonCreds.
 
-**NOTE**: public keys are not considered as secrets and can be stored in the same of other storage depending on the needs
+**NOTE**: Public keys are not considered secrets and can be stored separately when needed.
 
-The Identus Platform provides a secure storage for secrets. Hashicorp Vault is used as a secret storage service and provides a REST API, Web UI and command client to interact with the service.
+The Identus platform relies on HashiCorp Vault for secret storage. Vault exposes a REST API, web UI, and command-line client that operators can use to manage data.
 
-**NOTE:** The Identus Platform uses a single Vault instance for all tenants per environment. Logical data separation is achieved by using Vault namespaces and policies applied to the tenant.
+**NOTE:** Identus uses a single Vault instance per environment. Vault namespaces and policies enforce logical data separation for each tenant.
 
 ## Terminology
 
@@ -50,26 +50,26 @@ Logical component of the Agent that holds secrets and provides the logical or ph
 
 ### Cloud agent logical isolation
 
-Each instance of the Cloud agent needs to have access to the secrets but must be isolated from other agents at the same environment. For horizontal scalability the group of agents can be configured to share the same namespace, so they can access the same secrets, but they still need to use different Vault account to authenticate themselves to the Vault service.
+Each Cloud agent instance needs access to secrets but must remain isolated from other agents in the same environment. For horizontal scalability, multiple agents can share a namespace and access the same secrets while still authenticating with distinct Vault accounts.
 
 ### Cloud agent authentication
 
-Each instance of the Cloud agent needs to authenticate itself to the Vault service. The Vault service uses a token-based authentication mechanism. The Cloud agent uses a Vault [AppRole](https://developer.hashicorp.com/vault/docs/auth/approle) authentication method to authenticate itself to the Vault service. The token issued to the agent has the expiration time set in the application configuration. After the token expires, the agent needs to re-authenticate itself to the Vault service.
+Each Cloud agent instance authenticates to Vault with the [AppRole](https://developer.hashicorp.com/vault/docs/auth/approle) method. Vault issues a time-bound token based on the application configuration. When the token expires, the agent must re-authenticate.
 
 ### Wallet authentication
 
-Each instance of the Wallet needs to authenticate itself to the Vault service. The Cloud agent issues the authentication token to the Wallet based on the tenant ID.
+Each wallet instance authenticates to Vault with a token issued by the Cloud agent for the associated tenant ID.
 
 ### Secrets engine configuration
 
-The Vault service uses a secrets engine to store secrets. KV2 secrets engine is used to store secrets in the Vault service and provides the following features:
+Vault stores data through secrets engines. Identus uses the KV2 secrets engine, which provides the following features:
 
-- secrets are encrypted at rest  
-- secrets are encrypted in transit  
-- secrets are versioned  
-- secrets can be deleted, restored and rolled back to a previous version  
-- secrets are available via REST API, WEB UI, and command client  
-- secrets are logically separated by tenants
+- Secrets are encrypted at rest.
+- Secrets are encrypted in transit.
+- Secrets are versioned.
+- Secrets can be deleted, restored, and rolled back to a previous version.
+- Secrets are available via REST API, web UI, and command client.
+- Secrets are logically separated by tenant.
 
 ### Single and multi-tenant configuration
 

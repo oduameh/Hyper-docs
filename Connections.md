@@ -1,42 +1,38 @@
 # Connections {#connections}
 
-## Overview
+Establishing a connection lets two Hyperledger Identus agents exchange messages securely. This guide outlines the steps for creating an invitation, accepting it, and tracking the connection lifecycle through the DIDComm protocol.
 
-Connections are the foundation of secure communication in Hyperledger Identus. Before credentials can be issued or proofs can be verified, agents must establish a secure, authenticated connection using the DIDComm protocol. This section explains how to create connection invitations, accept them, and manage the connection lifecycle between issuers, holders, and verifiers.
-
-A connection is a stateful relationship between two parties that enables secure communication.
-
-The [Connection protocol](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#connection-protocol) is required to establish secure connections between agents, allowing them to exchange information and interact.
+The [Connection protocol](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#connection-protocol) governs how agents authenticate each other before they can share credentials or proofs.
 
 ## Roles
 
-The connection protocol has two roles:
+The protocol defines two participants:
 
-1. [Inviter](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#inviter): A subject that initiates a connection request by sending a [connection invitation](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#connection-invitation).  
-2. [Invitee](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#invitee): A subject that receives a connection invitation and accepts it by sending a [connection request](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#connection-request).
+1. [Inviter](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#inviter). Initiates a connection by sending a [connection invitation](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#connection-invitation).
+2. [Invitee](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#invitee). Accepts the invitation by returning a [connection request](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#connection-request).
 
 ## Prerequisites
 
-1. Inviter and Invitee Cloud agents up and running.
+- Inviter and invitee Cloud agents running.
 
 ## Cloud agent endpoints
 
-The protocol uses the following REST API endpoints:
+Use the following REST API endpoints to manage the connection lifecycle:
 
-1. [`/connections`](https://hyperledger-identus.github.io/docs/agent-api/#tag/Connections-Management):  
-   - [`POST`](https://hyperledger-identus.github.io/docs/agent-api/#tag/Connections-Management/operation/createConnection): Creates a new connection and returns an invitation  
-   - [`GET`](https://hyperledger-identus.github.io/docs/agent-api/#tag/Connections-Management/operation/getConnections): Returns a list of connections  
-2. [`GET /connections/{connectionId}`](https://hyperledger-identus.github.io/docs/agent-api/#tag/Connections-Management/operation/getConnection): Returns an existing connection record by id  
-3. [`POST /connection-invitations`](https://hyperledger-identus.github.io/docs/agent-api/#tag/Connections-Management/operation/acceptConnectionInvitation): Accepts an externally received invitation
+1. [`/connections`](https://hyperledger-identus.github.io/docs/agent-api/#tag/Connections-Management).
+   - [`POST`](https://hyperledger-identus.github.io/docs/agent-api/#tag/Connections-Management/operation/createConnection). Creates a new connection and returns an invitation.
+   - [`GET`](https://hyperledger-identus.github.io/docs/agent-api/#tag/Connections-Management/operation/getConnections). Returns the list of connections.
+2. [`GET /connections/{connectionId}`](https://hyperledger-identus.github.io/docs/agent-api/#tag/Connections-Management/operation/getConnection). Returns an existing connection record by ID.
+3. [`POST /connection-invitations`](https://hyperledger-identus.github.io/docs/agent-api/#tag/Connections-Management/operation/acceptConnectionInvitation). Accepts an externally received invitation.
 
 :::info Please check the full [Cloud agent API](https://hyperledger-identus.github.io/docs/agent-api) specification for more detailed information. :::
 
 ## Inviter flow
 
-1. Generate and share a new Out-of-Band (OOB) invitation (connection gets created in `InvitationGenerated` state)  
-2. Receive a connection request from the Invitee (connection moves to `ConnectionRequestReceived` state)  
-3. Accept the connection request (connection moves to `ConnectionResponsePending` state)  
-4. Send the connection response via the DIDComm Agent (connection achieves `ConnectionResponseSent` state)
+1. Generate and share a new Out-of-Band (OOB) invitation (the connection is created in `InvitationGenerated` state).
+2. Receive a connection request from the invitee (the connection moves to `ConnectionRequestReceived` state).
+3. Accept the connection request (the connection moves to `ConnectionResponsePending` state).
+4. Send the connection response via the DIDComm Agent (the connection reaches `ConnectionResponseSent` state).
 
 The following diagram represents the Inviter's Connection state transitions:
 
@@ -54,10 +50,10 @@ ConnectionResponseSent --> [*]
 
 ## Invitee flow
 
-1. Receive the OOB invitation (`InvitationReceived` state)  
-2. Accept the invitation (connection is created in `ConnectionRequestPending` state)  
-3. Send the connection request via [DIDComm](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#didcomm) (connection achieves `ConnectionRequestSent` state)  
-4. Receive the connection response (connection achieves `ConnectionResponseReceived` state)
+1. Receive the OOB invitation (`InvitationReceived` state).
+2. Accept the invitation (the connection is created in `ConnectionRequestPending` state).
+3. Send the connection request via [DIDComm](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#didcomm) (the connection reaches `ConnectionRequestSent` state).
+4. Receive the connection response (the connection reaches `ConnectionResponseReceived` state).
 
 The following diagram represents the Invitee's Connection state transitions:
 
