@@ -2,42 +2,33 @@
 
 ## Overview
 
-The Verifiable Data Registry (VDR) provides a storage-agnostic interface for managing data referenced in SSI protocols. VDR entries can store arbitrary data (such as credential status lists) and be resolved using VDR URIs. This abstraction allows switching storage implementations without changing the integration interface.
+The Verifiable Data Registry (VDR) gives the Cloud agent a storage-agnostic interface for data referenced in self-sovereign identity (SSI) protocols. Each entry can store arbitrary bytes—such as credential status lists—and be resolved through a VDR URI. Because the interface abstracts the storage layer, you can swap drivers without changing the integration logic.
 
-This tutorial demonstrates creating, resolving, and deactivating VDR entries using the Cloud agent's HTTP binding to the VDR specification.
-
----
-
-The [VDR specification](https://github.com/hyperledger-identus/vdr) defines a mechanism for creating, updating, deactivating, and retrieving data from various data sources. These sources are abstracted, enabling a unified integration interface for other systems. A reference implementation of the VDR is available as a library [here](https://github.com/hyperledger-identus/vdr), and an HTTP binding is also provided within the Cloud agent.
-
-The purpose of the VDR is to store data used across various SSI protocols. In many use cases, these protocols need to reference external resources using URIs. For example: credential status lists. Since the interface is storage-agnostic, switching the underlying storage implementation is trivial.
-
-VDR is capable of storing arbitrary bytes. In this tutorial, we will create a sample binary data and resolve the VDR to compare those bytes. Then we will try to deactivate the data and observe the resolution failure.
+This tutorial shows how to create, resolve, and deactivate VDR entries through the Cloud agent HTTP binding that implements the [VDR specification](https://github.com/hyperledger-identus/vdr). A reference library and the agent binding share the same behavior, so the steps apply across deployments.
 
 ## Roles
 
-1. The **data owner** \- is responsible for managing the VDR entries and their lifecycle.
+1. The **data owner** is responsible for creating entries and managing their lifecycle.
 
-**Example**  
-In this example, we will store data using a database driver to enable easy setup and testing.
+This tutorial stores data with the database driver so that you can complete the walkthrough on a single Cloud agent instance.
 
 ## Endpoints
 
-The example uses the following endpoints
+The example uses the following endpoints:
 
 | Endpoint | Description | Role |
 | :---- | :---- | :---- |
-| `GET /vdr/entires` | Resolve the data using VDR URI | Anyone |
+| `GET /vdr/entries` | Resolve the data by VDR URI | Anyone |
 | `POST /vdr/entries` | Create a new VDR entry | Data owner |
-| `DELETE /vdr/entries` | Delete the VDR entry | Data owner |
+| `DELETE /vdr/entries` | Deactivate the VDR entry | Data owner |
 
-### Create a sample binary data to store
+### Create sample binary input
 
 ```shell
 echo -ne '\x01\x02\x03\x04' > sample_in.bin
 ```
 
-We should have a file named `sample_in.bin` containing 4 bytes
+The command creates a file named `sample_in.bin` that contains four bytes.
 
 ### Create a new VDR entry with sample data
 
@@ -47,25 +38,23 @@ curl -X POST "http://localhost:8080/cloud-agent/vdr/entries?drid=database" \
   --data-binary @sample_in.bin
 ```
 
-The response should look something like
-
 ```json
 {
   "url":"vdr://?drf=memory&drid=memory&drv=0.1.0&m=0#d63bdd21-0347-4caf-a255-0cca7c2851fe"
 }
 ```
 
-The URL is the locator for the VDR entry. If referenced in the SSI protocol, anyone should be able to resolve this data. In this example, we are using only a database driver, so the data is resolvable only within the same agent instance.
+The response returns the locator for the VDR entry. When you reference the URL within an SSI protocol, any party with access to the same driver can resolve the stored data. Because this example uses the database driver, only the current Cloud agent instance can resolve the resource.
 
-### Resolve the data using VDR URL
+### Resolve the data by VDR URL
 
-Take the URL from previous step and run this command to resolve the URL.
+Use the URL from the previous step and resolve the entry.
 
 ```shell
 curl -X GET "http://localhost:8080/cloud-agent/vdr/entries?url=<ENCODED_VDR_URL>" > sample_out.bin
 ```
 
-Remember to encode the URL using percent encoding to escape any reserved characters in the URL syntax. If executed successfully, the response status should be 200, with the response body saved to a file named `sample_out.bin`.
+Remember to percent-encode the URL to escape reserved characters. A successful request returns status 200 and writes the response body to `sample_out.bin`.
 
 ### Compare the VDR entry and the input
 
@@ -73,7 +62,7 @@ Remember to encode the URL using percent encoding to escape any reserved charact
 diff sample_in.bin sample_out.bin
 ```
 
-The output of the `diff` command should be empty, as the VDR entry is exactly the same as the input data.
+The output should be empty, confirming that the VDR entry matches the input data.
 
 ### Deactivate the VDR entry
 
@@ -81,9 +70,9 @@ The output of the `diff` command should be empty, as the VDR entry is exactly th
 curl -X DELETE "http://localhost:8080/cloud-agent/vdr/entries?url=<ENCODED_VDR_URL>"
 ```
 
-Similar to resolving the data, we now change the HTTP method to `DELETE` to deactivate the VDR entry. The response status should be 200, indicating a successful operation.
+Changing the method to `DELETE` deactivates the entry and returns HTTP 200 on success.
 
-After trying to resolve the VDR entry in step 3, the response should be
+Resolving the entry after deletion produces a not-found error:
 
 ```json
 {
@@ -95,6 +84,6 @@ After trying to resolve the VDR entry in step 3, the response should be
 }
 ```
 
-indicating the resource is no longer available for resolution.
+The error confirms that the resource is no longer available for resolution.
 
 ---

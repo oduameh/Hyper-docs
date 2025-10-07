@@ -8,7 +8,7 @@ This section provides solutions to common issues and operational best practices 
 
 ## Docker logging management considerations
 
-When setting up a long-running environment using Docker Compose, it’s important to consider several factors to avoid issues such as excessive log file sizes leading to out-of-memory errors.
+When you run a long-lived Docker Compose deployment, configure log rotation to avoid oversized log files and potential out-of-memory errors.
 
 ### Configuring Docker Compose for effective log management
 
@@ -16,7 +16,7 @@ To ensure your Docker containers run smoothly and avoid problems related to exce
 
 ### Log rotation example
 
-Here’s a example in the mediator how to set up log rotation in your Docker Compose configuration:
+Here’s an example from the mediator service that shows how to configure log rotation in your Docker Compose file:
 
 1. Open your docker-compose.yml file.  
 2. Add or update the logging configuration under your service definition. For example:
@@ -42,11 +42,11 @@ services:
 docker-compose up -d
 ```
 
-3. Save the changes to your `docker-compose.yml` file and **Restart** your Docker containers to apply the new logging configuration.
+3. Save the changes to your `docker-compose.yml` file and restart your Docker containers to apply the new logging configuration.
 
 ### Configuring Docker Daemon for effective log management
 
-We should consider configuring the logging Options in the **Docker Daemon**. For a global logging configuration applicable to all Docker containers. We can modify the Docker daemon settings. This approach ensures consistent log management across all containers.
+You can also configure logging options in the Docker daemon for a global policy that applies to every container. This approach keeps log management consistent across services.
 
 1. Edit the Docker daemon configuration file (usually located at /etc/docker/daemon.json). If the file doesn’t exist, you can create it.  
 2. Add or update the logging options in the `daemon.json` file:

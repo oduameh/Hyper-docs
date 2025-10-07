@@ -4,33 +4,31 @@
 
 Multi-tenancy enables a single Cloud agent instance to serve multiple organizations or user groups with complete data isolation. Each tenant has their own wallet containing DIDs, credentials, and connections, logically separated from other tenants. This section covers tenant onboarding, authentication methods (built-in and external IAM with Keycloak), access control, and tenant migration.
 
-Understanding multi-tenancy is essential for enterprise deployments, SaaS platforms, or any scenario where you need to serve multiple distinct user groups from shared infrastructure.
+Understanding multi-tenancy is essential for enterprise deployments, SaaS platforms, or any scenario where you need to serve multiple user groups from shared infrastructure.
 
 ---
 
 ## Tenant onboarding
 
-In a multi-tenant setup, it's crucial to understand the various roles within the system. There are two key roles in tenant management: administrators and tenants. Administrators are in charge of managing wallets and tenants, while tenants are users who engage in standard SSI interactions with the Cloud agent.
+Two roles participate in tenant management. Administrators manage wallets and tenants, and tenants use those wallets to perform standard SSI interactions with the Cloud agent.
 
 ## Roles
 
-In tenant management, there are 2 roles:
-
-1. [Administrator](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#administrator)  
-2. [Tenant](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#tenant)
+1. [Administrator](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#administrator). Manages wallets, entities, and authentication methods.
+2. [Tenant](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#tenant). Uses the allocated wallet to issue, hold, and present credentials.
 
 ## Prerequisites
 
-1. The Cloud agent up and running  
-2. The Cloud agent is configured with the following environment variables:  
-   1. `ADMIN_TOKEN=my-admin-token`  
-   2. `API_KEY_ENABLED=true`  
-   3. `API_KEY_AUTO_PROVISIONING=false`  
-   4. `DEFAULT_WALLET_ENABLED=false`
+1. Cloud agent running.
+2. The Cloud agent configured with the following environment variables:
+   - `ADMIN_TOKEN=my-admin-token`
+   - `API_KEY_ENABLED=true`
+   - `API_KEY_AUTO_PROVISIONING=false`
+   - `DEFAULT_WALLET_ENABLED=false`
 
-## Overview
+## Onboarding flow
 
-This is a guide on how to onboard a new tenant from scratch. This tutorial will demonstrate the creation of a new entity representing the tenant, the provisioning of a wallet, and enabling an authentication method for this tenant. Subsequently, the tenant will gain the capability to engage in SSI activities within an isolated wallet environment using the Cloud agent.
+This walkthrough covers how to onboard a new tenant from scratch. You create an entity to represent the tenant, provision a wallet, and enable an authentication method. Afterward, the tenant can interact with the Cloud agent in an isolated wallet environment.
 
 ## Endpoints
 
@@ -46,7 +44,7 @@ This is a guide on how to onboard a new tenant from scratch. This tutorial will 
 
 ### Check the existing wallets
 
-When running the Cloud agent using the configurations above, the Agent should start with an empty state. Listing wallets on it should return empty results.
+When you start the Cloud agent with the configuration above, it should have no wallets. Listing wallets returns an empty result set.
 
 ```shell
 curl -X 'GET' \
@@ -68,7 +66,7 @@ Response Example:
 
 ### Create a new wallet
 
-The wallet can be created using a `POST /wallets` endpoint. This wallet is going to act as a container for the tenant's assets (DIDs, VCs, Connections, etc.). The wallet seed may be provided during the wallet creation or omitted to let the Agent generate one randomly.
+Create a wallet with the `POST /wallets` endpoint. The wallet stores the tenant's assets (DIDs, verifiable credentials, connections, and so on). Provide a seed during creation or omit it to let the agent generate a random value.
 
 ```shell
 curl -X 'POST' \
@@ -95,7 +93,7 @@ Response Example:
 
 ### Create a new entity
 
-A new entity can be created to represent a tenant. To create a new entity, send a `POST` request to the `/iam/entities` endpoint with the following parameters:
+Create an entity to represent the tenant by sending a `POST` request to the `/iam/entities` endpoint with the following payload:
 
 ```shell
 curl -X 'POST' \
@@ -127,7 +125,7 @@ Response Example:
 
 ### Register `apikey` authentication method
 
-With the new tenant now equipped with both a wallet and an entity, the final step involves setting up the entity's authentication method. Once this step is completed, the administrator should provide the tenant with an `apikey`, granting them access to utilize the Agent.
+After the tenant has a wallet and entity, configure the entity's authentication method. Share the resulting `apikey` with the tenant so they can access the agent.
 
 ```shell
 curl -X 'POST' \
@@ -143,11 +141,11 @@ curl -X 'POST' \
 
 Make sure to use the `entityId` from the previous step.
 
-HTTP code 201 returns in the case of the successful request execution.
+The endpoint returns HTTP status code 201 when the request succeeds.
 
 ## Tenant interactions
 
-With the `apikey` provisioned by the administrator, the tenant is able to authenticate and use the Cloud agent.
+With the `apikey` provisioned by the administrator, the tenant can authenticate and use the Cloud agent.
 
 ### Perform a simple action to verify access to the Cloud agent
 

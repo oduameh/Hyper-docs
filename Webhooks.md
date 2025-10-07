@@ -2,44 +2,38 @@
 
 ## Overview
 
-Webhooks enable real-time event notifications from the Cloud agent to your application. Instead of polling for status changes, your application receives HTTP callbacks whenever connections are established, credentials are issued, or proofs are verified. This section explains webhook configuration, event types, and implementation patterns for processing notifications.
+Webhooks deliver real-time event notifications from the Cloud agent to your application. Instead of polling for status changes, your integration receives HTTP callbacks when connections advance, credentials are issued, proofs are verified, or DIDs are published. This guide explains webhook concepts, configuration options, security considerations, and handling patterns.
 
 ---
 
-## Introduction
-
-Welcome to the tutorial on webhook notifications in the Cloud agent. In this tutorial, we will explore how webhook notifications can enhance your experience with the Cloud agent by providing real-time updates on events. By leveraging webhook notifications, you can stay informed about important changes happening within the agent.
-
-## Understanding webhook notifications
+## Webhook fundamentals
 
 ### What are webhooks?
 
-Webhooks enable real-time communication between applications by sending HTTP requests containing event data to specified endpoints (webhook URLs) when events occur. They establish a direct communication channel, allowing applications to receive instant updates and respond in a timely manner, promoting efficient integration between event-driven systems.
+Webhooks send HTTP requests to a registered endpoint when an event occurs. The request body carries the event payload so your application can react immediately without polling.
 
-### Purpose of webhook notifications in the Cloud agent
+### Cloud agent webhook scope
 
-Webhook notifications in the Cloud agent serve as a vital feature, enabling you to receive timely updates on various events occurring within the agent. Webhooks allow you to receive HTTP requests containing event details at a specified endpoint (webhook URL). These events are specifically related to the execution of the [Connect](https://hyperledger-identus.github.io/docs/tutorials/connections/connection), [Issue](https://hyperledger-identus.github.io/docs/tutorials/credentials/didcomm/issue), and [Presentation](https://hyperledger-identus.github.io/docs/tutorials/credentials/didcomm/present-proof) flows. Webhook notifications will be sent each time there is a state change during the execution of these protocols.
+The Cloud agent emits webhooks for the [Connect](https://hyperledger-identus.github.io/docs/tutorials/connections/connection), [Issue](https://hyperledger-identus.github.io/docs/tutorials/credentials/didcomm/issue), [Presentation](https://hyperledger-identus.github.io/docs/tutorials/credentials/didcomm/present-proof), and [DID publication](https://hyperledger-identus.github.io/docs/tutorials/dids/publish) flows. Each state change in those protocols generates a callback that includes the resource identifier, the new state, and the wallet that triggered the event.
 
-By leveraging webhooks, you can integrate the Cloud agent seamlessly into your applications and systems. You can track and monitor the progress of the main flows, receiving timely updates about changes and events.
+## Configure the webhook feature
 
-## Configuring the webhook feature
+### Enable webhook delivery
 
-### Enabling the webhook feature
+The Cloud agent supports global webhooks that capture events from every wallet and wallet-scoped webhooks that capture events for a single wallet.
 
-There are two kinds of webhook notifications: global webhooks and wallet webhooks. Global webhooks capture all events that happen on the Cloud agent across all wallets, whereas wallet webhooks only capture events that are specific to assets within a particular wallet.
+**Enable global webhooks with environment variables**
 
-**Enable global webhook using environment variables**
-
-The Cloud agent uses the following environment variables to manage global webhook notifications:
+The following environment variables configure global webhook notifications:
 
 | Name | Description | Default |
 | :---- | :---- | :---- |
 | `GLOBAL_WEBHOOK_URL` | The webhook endpoint URL where the notifications will be sent | null |
 | `GLOBAL_WEBHOOK_API_KEY` | The optional API key (bearer token) to use as the `Authorization` header | null |
 
-**Enable wallet webhook for default wallet using environment variables**
+**Enable default wallet webhooks with environment variables**
 
-In a multi-tenant scenario, the Cloud agent can optionally create a default wallet to simplify the development and deployment process. The webhook configuration for this default wallet can be defined using environment variables. After the default wallet is created, its webhook settings are stored in the system and are no longer influenced by these environment variables.
+In multi-tenant deployments, the Cloud agent can create a default wallet to simplify development. Configure that wallet’s webhook through environment variables. After the wallet exists, subsequent changes must use the API because the stored settings override the environment variables.
 
 | Name | Description | Default |
 | :---- | :---- | :---- |
@@ -47,9 +41,9 @@ In a multi-tenant scenario, the Cloud agent can optionally create a default wall
 | `DEFAULT_WALLET_WEBHOOK_URL` | The webhook endpoint URL where the notifications will be sent | null |
 | `DEFAULT_WALLET_WEBHOOK_API_KEY` | The optional API key (bearer token) to use as the `Authorization` header | null |
 
-**Enable wallet hook using REST API**
+**Enable wallet webhooks with the REST API**
 
-In a multi-tenant scenario, there is an option to configure wallet webhook parameters using a REST API, which offers more flexibility. For each individual wallet, users can create a new webhook by making a POST request to `/events/webhooks`, which in turn creates a new webhook resource specific to their wallet.
+In multi-tenant deployments you can manage each wallet’s webhook using the REST API. Create a webhook by sending a POST request to `/events/webhooks`, which returns the resource definition for that wallet.
 
 ```shell
 curl --location --request POST 'http://localhost:8080/cloud-agent/events/webhooks' \
@@ -72,25 +66,21 @@ Response Example:
 }
 ```
 
-### Securing the webhook endpoint
+### Secure the webhook endpoint
 
-It is essential to secure the webhook endpoint to protect the integrity and confidentiality of the event data. Consider the following best practices when securing your webhook endpoint:
+Protect the webhook endpoint to maintain the integrity and confidentiality of event data.
 
-- Use HTTPS to encrypt communication between the Cloud agent and the webhook endpoint.  
-- Implement authentication mechanisms (e.g., API keys, tokens) to verify the authenticity of incoming requests.  
-- Validate and sanitize incoming webhook requests to mitigate potential security risks.
+- Use HTTPS to encrypt traffic between the Cloud agent and your service.
+- Authenticate incoming requests with API keys or tokens.
+- Validate and sanitize each payload before processing it.
 
-One of the authorization mechanism for the Cloud agent's webhook notifications is the bearer token. If configured, the token will be included in the `Authorization` header of the HTTP request sent by the agent to the webhook endpoint. You can configure this bearer token by setting the value of the `GLOBAL_WEBHOOK_API_KEY` or `DEFAULT_WALLET_WEBHOOK_API_KEY` environment variable.
-
-An alternative approach is to make use of the `customHeaders` property within the REST API for configuring webhooks. This option offers increased flexibility when custom or multiple headers are needed.
+When you configure `GLOBAL_WEBHOOK_API_KEY` or `DEFAULT_WALLET_WEBHOOK_API_KEY`, the Cloud agent includes the value as a bearer token in the `Authorization` header. For more complex scenarios, use the REST API `customHeaders` property to define any additional headers required by your endpoint.
 
 ## Event format and types
 
 ### Event format
 
-Webhook notifications from the Cloud agent are sent as JSON payloads in the HTTP requests.
-
-The event format is consistent across all events. Each event follows a common structure, while the 'data' field within the event payload contains information specific to the type of event. Here is an example of the JSON payload format:
+Webhook notifications use JSON payloads with a consistent structure. The top-level fields identify the event, and the `data` field contains the payload that matches the event type.
 
 ```json
 {
@@ -104,9 +94,9 @@ The event format is consistent across all events. Each event follows a common st
 }
 ```
 
-This event format ensures consistency and allows you to handle webhook notifications uniformly while easily extracting the relevant data specific to each event type from the `data` field.
+This format lets you handle every webhook uniformly while focusing on the event-specific details in `data`.
 
-Here is a complete example of a webhook notification event related to a connection flow state change (invitation generated):
+The following example shows a connection state change when an invitation is generated:
 
 ```json
 {
@@ -134,15 +124,7 @@ Here is a complete example of a webhook notification event related to a connecti
 
 ### Common event types
 
-The Cloud agent sends webhook notifications for events related to protocol state changes in the [Connect](https://hyperledger-identus.github.io/docs/tutorials/connections/connection), [Issue](https://hyperledger-identus.github.io/docs/tutorials/credentials/didcomm/issue), [Presentation](https://hyperledger-identus.github.io/docs/tutorials/credentials/didcomm/present-proof) flows, and also [DID publication](https://hyperledger-identus.github.io/docs/tutorials/dids/publish) state changes. These events allow you to track the progress and updates within these flows in real-time.
-
-The `id` field of the common event structure is the unique identifier (UUID) of the event and is randomly generated at event creation time.
-
-The `ts` field contains the timestamp (date \+ time) at which the event was created.
-
-The `walletId` field contains information about the wallet from which the event originates.
-
-The `type` field indicates to which flow/process the received event is related, and hence the type of JSON payload that can be expected in the inner `data` field. Possible values are:
+The `id` field contains the unique event identifier, `ts` records the timestamp, and `walletId` identifies the wallet that produced the event. The `type` field maps to the protocol that triggered the notification. Possible values include:
 
 | Value | Description |
 | :---- | :---- |
@@ -151,35 +133,31 @@ The `type` field indicates to which flow/process the received event is related, 
 | `PresentationUpdated` | An update in the VC presentation flow state |
 | `DIDStatusUpdated` | An update in the DID publication state |
 
-State change notifications that you can expect to receive through webhook notifications include:
+You can subscribe to state changes throughout the protocols:
 
-- Connection State Change: Notifies about state changes in the connection flow, such as `InvitationGenerated`, `ConnectionRequestSent`, `ConnectionResponseReceived`, etc. Please refer to the `state` field of the [connection resource](https://hyperledger-identus.github.io/docs/agent-api/#tag/Connections-Management/operation/getConnection) for an exhaustive list of states.  
-- Credential State Change: Indicates changes in the credential issuance flow, such as `OfferSent`, `RequestReceived`, `CredentialSent`, etc. Please refer to the `protocolState` field of the [credential resource](https://hyperledger-identus.github.io/docs/agent-api/#tag/Issue-Credentials-Protocol/operation/getCredentialRecord) for an exhaustive list of states.  
-- Presentation State Change: Notifies about changes in the presentation flow, such as `RequestReceived`, `PresentationGenerated`, `PresentationVerified`, etc. Please refer to the `status` field of the [presentation resource](https://hyperledger-identus.github.io/docs/agent-api/#tag/Present-Proof/operation/getPresentation) for an exhaustive list of states.  
-- DID State Change: Notifies about DID-related state changes. Currently, only the `Published` DID publication state event will be notified.
+- **Connection state changes.** Track updates such as `InvitationGenerated`, `ConnectionRequestSent`, and `ConnectionResponseReceived`. For the full list, see the `state` field in the [connection resource](https://hyperledger-identus.github.io/docs/agent-api/#tag/Connections-Management/operation/getConnection).
+- **Credential state changes.** Follow issuance events like `OfferSent`, `RequestReceived`, and `CredentialSent`. Review the `protocolState` field in the [credential resource](https://hyperledger-identus.github.io/docs/agent-api/#tag/Issue-Credentials-Protocol/operation/getCredentialRecord) for every possible value.
+- **Presentation state changes.** Monitor proof workflows with statuses such as `RequestReceived`, `PresentationGenerated`, and `PresentationVerified`. Refer to the `status` field in the [presentation resource](https://hyperledger-identus.github.io/docs/agent-api/#tag/Present-Proof/operation/getPresentation).
+- **DID publication state changes.** Receive the `Published` event when a DID becomes available.
 
-## Processing webhook notifications
+## Process webhook notifications
 
-### Handling incoming webhook requests
+### Handle incoming webhook requests
 
-To handle incoming webhook notifications from the Cloud agent in your application, follow these general steps:
+Use the following steps to process Cloud agent callbacks:
 
-1. Receive the HTTP request at your specified webhook endpoint.  
-2. Parse the JSON payload of the request to extract the event details.  
-3. Process the event data according to your application's requirements.  
-4. Send a response back to acknowledge the successful receipt of the webhook notification. For a successful reception, the response status code should be `>= 200` and `< 300`. Any other response status code will lead to a new attempt from the Cloud agent.
+1. Receive the HTTP request at your webhook endpoint.
+2. Parse the JSON payload and extract the event details.
+3. Run your application logic based on the event contents.
+4. Return a `2xx` response to acknowledge receipt. Any other status code triggers a retry.
 
-### Error handling and retry mechanisms
+### Handle retries
 
-When working with webhook notifications in the Cloud agent, it is important to consider error handling and retry mechanisms. In case of failed webhook notifications or errors, the Cloud agent employs an automatic retry mechanism to ensure delivery. The agent will attempt to send the webhook notification up to three times, with a five-second interval between each attempt. Please note that the number of retries and the interval duration are currently not configurable in the Cloud agent.
+The Cloud agent retries failed webhook deliveries up to three times with five-second intervals. Retries are currently not configurable, so design idempotent handlers that can safely process the same event more than once.
 
-By default, this retry mechanism provides a reasonable level of reliability for delivering webhook notifications, allowing for temporary network issues or intermittent failures.
+### A basic webhook implementation for logging requests
 
-### A basic Webhook implementation for logging requests
-
-In the following example, we will demonstrate a simple Python code snippet that sets up a webhook endpoint and logs incoming HTTP requests to the console. This basic implementation can serve as a starting point for building more advanced webhook systems.
-
-In the provided Python code snippet, the port on which the webhook listener will listen for incoming requests should be passed as a command-line parameter. This allows flexibility in starting multiple webhooks in parallel, which is useful when testing multiple locally running agents, e.g. for a holder, an issuer, and/or a verifier.
+The following Python example sets up a webhook endpoint and logs incoming HTTP requests to the console. Pass the listening port as a command-line parameter so you can run multiple listeners in parallel while testing issuer, holder, and verifier agents.
 
 ```py
 #!/usr/bin/env python3
@@ -266,8 +244,4 @@ if __name__ == '__main__':
 
 ## Conclusion
 
-Congratulations\! You've learned about webhook notifications in the Cloud agent. By leveraging this feature, you can receive real-time updates on events happening within the agent, enabling you to integrate the Cloud agent seamlessly into your applications. Remember to secure your webhook endpoint and handle webhook notifications effectively to maximize the benefits of this feature.
-
-Start integrating webhook notifications into your Cloud agent workflow and unlock the power of real-time event updates\!
-
-## If you have any further questions or need assistance, don't hesitate to reach out to the Identus support team or refer to the official documentation for more details.
+Webhooks keep your integration synchronized with Cloud agent activity without polling. Secure each endpoint, configure the appropriate scope, and design idempotent handlers so your services can respond to SSI events as soon as they occur.

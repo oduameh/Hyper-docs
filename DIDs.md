@@ -2,9 +2,7 @@
 
 ## Overview
 
-Decentralized identifiers (DIDs) are the cornerstone of self-sovereign identity. In Hyperledger Identus, PRISM DIDs are created offline, optionally published to the Cardano blockchain, and can be updated or deactivated throughout their lifecycle. This section covers the complete DID management process, from creation through deactivation.
-
-Understanding DID lifecycle management is essential for issuing credentials (DIDs are used as issuer identifiers) and for holders who need DIDs to receive and present credentials.
+Decentralized identifiers (DIDs) are the cornerstone of self-sovereign identity. In Hyperledger Identus, PRISM DIDs are created offline, can be published to the Cardano blockchain, and support updates or deactivation throughout their lifecycle. Understanding how to create, publish, and resolve DIDs prepares you to issue credentials and receive proofs securely.
 
 ---
 
@@ -18,25 +16,24 @@ PRISM DIDs can be created entirely offline without interacting with the blockcha
 
 ## Roles
 
-1. [DID Controller](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#did-controller) is the organization or individual who has control of the DID.
+- [DID controller](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#did-controller). Owns and manages the DID state.
 
 ## Prerequisites
 
-1. DID Controller Cloud agent up and running
+- DID controller Cloud agent running.
 
-## Overview
+## Cloud agent capabilities
 
-For this example, a PRISM DID gets created and stored inside the Cloud agent along with the private keys. It is not automatically published. The Agent will keep track of private keys used for the create-operation and the content of the operation itself.
+In this example, the Cloud agent creates a PRISM DID, stores the private keys, and keeps the create-operation payload. The DID is not published automatically; publication happens when you submit the operation to the blockchain.
 
-The Cloud agent provides two endpoint groups to facilitate PRISM DID usage.
+The Cloud agent exposes two endpoint groups for DID management:
 
-- `/dids/*` facilitate of low-level interactions between DID operations and the blockchain. The DID controllers will handle key management independently and use these endpoints for blockchain interaction.  
-    
-- `/did-registrar/*` Facilitates a higher-level interaction with PRISM DID, where the Cloud agent handles key management concerns.
+- `/dids/*`. Low-level operations that let controllers manage keys and interact with the blockchain directly.
+- `/did-registrar/*`. Higher-level operations where the Cloud agent manages keys on behalf of the controller.
 
 ## Endpoints
 
-The example uses the following endpoints
+The example uses the following endpoints:
 
 | Endpoint | Description | Role |
 | :---- | :---- | :---- |
@@ -46,7 +43,7 @@ The example uses the following endpoints
 
 ## DID controller interactions
 
-### Check existing DID on the Cloud agent
+### Check existing DIDs on the Cloud agent
 
 ```shell
 curl --location --request GET 'http://localhost:8080/cloud-agent/did-registrar/dids' \
@@ -54,11 +51,11 @@ curl --location --request GET 'http://localhost:8080/cloud-agent/did-registrar/d
   --header 'Accept: application/json'
 ```
 
-The result should show an empty list, as no DIDs exist on this Cloud agent instance.
+The result shows an empty list because this Cloud agent instance has no DIDs yet.
 
-### Create the Cloud agent managed DID using DID registrar endpoint
+### Create a Cloud agent-managed DID
 
-The DID controller can create a new DID by sending a [DID document](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#did-document) template to the Agent. Since key pairs are generated and managed by the Cloud agent, DID controller only has to specify the key `id`, `purpose` (`authentication`, `assertionMethod`, etc.), and optional `curve` (`secp256k1`, `Ed25519`, `X25519`). If the `curve` is omitted, the agent uses the `secp256k1` curve by default.
+Send a [DID document](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#did-document) template to the DID registrar endpoint. Because the Cloud agent generates and stores the key pairs, the DID controller only provides each key `id`, `purpose` (`authentication`, `assertionMethod`, and so on), and an optional `curve` (`secp256k1`, `Ed25519`, or `X25519`). When `curve` is omitted, the agent uses `secp256k1` by default.
 
 ```shell
 curl --location --request POST 'http://localhost:8080/cloud-agent/did-registrar/dids' \
@@ -79,7 +76,7 @@ curl --location --request POST 'http://localhost:8080/cloud-agent/did-registrar/
   }'
 ```
 
-The response should look like
+The response resembles the following output:
 
 ```json
 {
@@ -89,7 +86,7 @@ The response should look like
 
 ### List the created DID
 
-Check the `GET /did-registrar/dids` endpoint. The response should return a list containing one DID.
+Query the `GET /did-registrar/dids` endpoint. The response returns the new DID.
 
 ```json
 {
@@ -106,11 +103,9 @@ Check the `GET /did-registrar/dids` endpoint. The response should return a list 
 }
 ```
 
-### Resolution of the created DID
+### Resolve the created DID
 
-To check that the DID document is correctly populated, test the created DID against the resolution endpoint.
-
-Replacing the `{didRef}` with the long-form DID, and the response should return the DID document. Replacing the `{didRef}` with the short-form DID, and the resolution should fail since the DID still needs to be published.
+Verify that the DID document is populated by calling the resolution endpoint. Replace `{didRef}` with the long-form DID to retrieve the document. If you use the short-form DID before publication, resolution fails because the operation has not been anchored on-chain.
 
 ```shell
 curl --location --request GET 'http://localhost:8080/cloud-agent/dids/{didRef}' \
