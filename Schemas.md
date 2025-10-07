@@ -18,22 +18,22 @@ This document describes the purpose, supported formats, and technical details of
 
 [Credential Schema](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#credential-schema) is a data template for [Verifiable Credentials](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#verifiable-credential). It contains [claims](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#claims) (attributes) of the Verifiable Credentials, credential schema author, type, name, version, and proof of authorship. By putting schema definitions on a public blockchain, they are available for all verifiers to examine to determine the semantic interoperability of the Credential.
 
-The Identus Platform supports the following credential schema specifications:
+The Identus Platform supports the following specifications of the credential schemas:
 
-- [Verifiable Credentials JSON Schema 2022](https://www.w3.org/TR/vc-json-schema/).
-- [AnonCreds Schema](https://hyperledger.github.io/anoncreds-spec/#term:schemas).
+- [Verifiable Credentials JSON Schema 2022](https://www.w3.org/TR/vc-json-schema/)  
+- [AnonCreds Schema](https://hyperledger.github.io/anoncreds-spec/#term:schemas)
 
-The signed credential schema allows the following verifications:
+The signed credential schema allows doing following verifications:
 
-- Semantic verification of the verifiable credentials.
-- Authorship verification.
+- semantic verification of the verifiable credentials  
+- authorship verification
 
-The author can use credential schemas to issue the following types of verifiable credentials:
+The author can use credential schema to issue the following types of verifiable credentials:
 
-- JSON verifiable credential.
-- JSON-LD verifiable credential.
-- AnonCreds verifiable credential.
-- All types above encoded as JWT.
+- JSON Verifiable Credential  
+- JSON-LD Verifiable Credential  
+- Anoncred Verifiable Credential  
+- all types above but encoded as JWT
 
 Limitations and constraints of the Identus Platform:
 

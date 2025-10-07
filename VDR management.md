@@ -12,22 +12,22 @@ The [VDR specification](https://github.com/hyperledger-identus/vdr) defines a me
 
 The purpose of the VDR is to store data used across various SSI protocols. In many use cases, these protocols need to reference external resources using URIs. For example: credential status lists. Since the interface is storage-agnostic, switching the underlying storage implementation is trivial.
 
-The VDR can store arbitrary bytes. In this tutorial, you create a sample binary data file and resolve the VDR to compare those bytes. Then you deactivate the data and observe the resolution failure.
+VDR is capable of storing arbitrary bytes. In this tutorial, we will create a sample binary data and resolve the VDR to compare those bytes. Then we will try to deactivate the data and observe the resolution failure.
 
 ## Roles
 
-1. The **data owner** is responsible for managing the VDR entries and their lifecycle.
+1. The **data owner** \- is responsible for managing the VDR entries and their lifecycle.
 
-**Example**
-In this example, you store data using a database driver to enable easy setup and testing.
+**Example**  
+In this example, we will store data using a database driver to enable easy setup and testing.
 
 ## Endpoints
 
-The example uses the following endpoints.
+The example uses the following endpoints
 
 | Endpoint | Description | Role |
 | :---- | :---- | :---- |
-| `GET /vdr/entries` | Resolve the data using a VDR URI | Anyone |
+| `GET /vdr/entires` | Resolve the data using VDR URI | Anyone |
 | `POST /vdr/entries` | Create a new VDR entry | Data owner |
 | `DELETE /vdr/entries` | Delete the VDR entry | Data owner |
 
@@ -37,7 +37,7 @@ The example uses the following endpoints.
 echo -ne '\x01\x02\x03\x04' > sample_in.bin
 ```
 
-You should now have a file named `sample_in.bin` containing four bytes.
+We should have a file named `sample_in.bin` containing 4 bytes
 
 ### Create a new VDR entry with sample data
 

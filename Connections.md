@@ -23,20 +23,20 @@ The connection protocol has two roles:
 
 The protocol uses the following REST API endpoints:
 
-1. [`/connections`](https://hyperledger-identus.github.io/docs/agent-api/#tag/Connections-Management):
-   - [`POST`](https://hyperledger-identus.github.io/docs/agent-api/#tag/Connections-Management/operation/createConnection): Creates a new connection and returns an invitation.
-   - [`GET`](https://hyperledger-identus.github.io/docs/agent-api/#tag/Connections-Management/operation/getConnections): Returns a list of connections.
-2. [`GET /connections/{connectionId}`](https://hyperledger-identus.github.io/docs/agent-api/#tag/Connections-Management/operation/getConnection): Returns an existing connection record by id.
-3. [`POST /connection-invitations`](https://hyperledger-identus.github.io/docs/agent-api/#tag/Connections-Management/operation/acceptConnectionInvitation): Accepts an externally received invitation.
+1. [`/connections`](https://hyperledger-identus.github.io/docs/agent-api/#tag/Connections-Management):  
+   - [`POST`](https://hyperledger-identus.github.io/docs/agent-api/#tag/Connections-Management/operation/createConnection): Creates a new connection and returns an invitation  
+   - [`GET`](https://hyperledger-identus.github.io/docs/agent-api/#tag/Connections-Management/operation/getConnections): Returns a list of connections  
+2. [`GET /connections/{connectionId}`](https://hyperledger-identus.github.io/docs/agent-api/#tag/Connections-Management/operation/getConnection): Returns an existing connection record by id  
+3. [`POST /connection-invitations`](https://hyperledger-identus.github.io/docs/agent-api/#tag/Connections-Management/operation/acceptConnectionInvitation): Accepts an externally received invitation
 
 :::info Please check the full [Cloud agent API](https://hyperledger-identus.github.io/docs/agent-api) specification for more detailed information. :::
 
 ## Inviter flow
 
-1. Generate and share a new Out-of-Band (OOB) invitation (connection gets created in `InvitationGenerated` state).
-2. Receive a connection request from the Invitee (connection moves to `ConnectionRequestReceived` state).
-3. Accept the connection request (connection moves to `ConnectionResponsePending` state).
-4. Send the connection response via the DIDComm Agent (connection achieves `ConnectionResponseSent` state).
+1. Generate and share a new Out-of-Band (OOB) invitation (connection gets created in `InvitationGenerated` state)  
+2. Receive a connection request from the Invitee (connection moves to `ConnectionRequestReceived` state)  
+3. Accept the connection request (connection moves to `ConnectionResponsePending` state)  
+4. Send the connection response via the DIDComm Agent (connection achieves `ConnectionResponseSent` state)
 
 The following diagram represents the Inviter's Connection state transitions:
 
@@ -54,10 +54,10 @@ ConnectionResponseSent --> [*]
 
 ## Invitee flow
 
-1. Receive the OOB invitation (`InvitationReceived` state).
-2. Accept the invitation (connection is created in `ConnectionRequestPending` state).
-3. Send the connection request via [DIDComm](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#didcomm) (connection achieves `ConnectionRequestSent` state).
-4. Receive the connection response (connection achieves `ConnectionResponseReceived` state).
+1. Receive the OOB invitation (`InvitationReceived` state)  
+2. Accept the invitation (connection is created in `ConnectionRequestPending` state)  
+3. Send the connection request via [DIDComm](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#didcomm) (connection achieves `ConnectionRequestSent` state)  
+4. Receive the connection response (connection achieves `ConnectionResponseReceived` state)
 
 The following diagram represents the Invitee's Connection state transitions:
 

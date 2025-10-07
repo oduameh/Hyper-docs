@@ -14,23 +14,23 @@ In a multi-tenant setup, it's crucial to understand the various roles within the
 
 ## Roles
 
-In tenant management, there are two roles:
+In tenant management, there are 2 roles:
 
 1. [Administrator](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#administrator)  
 2. [Tenant](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#tenant)
 
 ## Prerequisites
 
-1. The Cloud agent up and running.
-2. The Cloud agent is configured with the following environment variables:
-   1. `ADMIN_TOKEN=my-admin-token`
-   2. `API_KEY_ENABLED=true`
-   3. `API_KEY_AUTO_PROVISIONING=false`
+1. The Cloud agent up and running  
+2. The Cloud agent is configured with the following environment variables:  
+   1. `ADMIN_TOKEN=my-admin-token`  
+   2. `API_KEY_ENABLED=true`  
+   3. `API_KEY_AUTO_PROVISIONING=false`  
    4. `DEFAULT_WALLET_ENABLED=false`
 
-## Guide overview
+## Overview
 
-This guide explains how to onboard a new tenant from scratch. It demonstrates how to create a new entity representing the tenant, provision a wallet, and enable an authentication method for this tenant. Subsequently, the tenant gains the capability to engage in SSI activities within an isolated wallet environment using the Cloud agent.
+This is a guide on how to onboard a new tenant from scratch. This tutorial will demonstrate the creation of a new entity representing the tenant, the provisioning of a wallet, and enabling an authentication method for this tenant. Subsequently, the tenant will gain the capability to engage in SSI activities within an isolated wallet environment using the Cloud agent.
 
 ## Endpoints
 

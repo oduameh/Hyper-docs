@@ -18,15 +18,15 @@ This section covers secret storage architecture, key derivation, seed generation
 
 ## Introduction
 
-Secrets are sensitive data that should be stored securely. The Identus Platform handles the following types of secrets:
+Secrets are sensitive data that should be stored securely. There are following types of the secrets in the Identus Platform:
 
-- Seed: a secret used to derive cryptographic keys.
-- Private key: a secret used to sign data.
-- Any other entities that contain sensitive data (for instance, `credential-definition` and the `link-secret` used by AnonCreds).
+- seed: a secret used to derive cryptographic keys  
+- private key: a secret used to sign data  
+- any other entities that contain sensitive data (for instance, `credential-definition` and the `link-secret` used by the AnonCreds)
 
 **NOTE**: public keys are not considered as secrets and can be stored in the same of other storage depending on the needs
 
-The Identus Platform provides secure storage for secrets. HashiCorp Vault is used as a secret storage service and provides a REST API, web UI, and command-line client to interact with the service.
+The Identus Platform provides a secure storage for secrets. Hashicorp Vault is used as a secret storage service and provides a REST API, Web UI and command client to interact with the service.
 
 **NOTE:** The Identus Platform uses a single Vault instance for all tenants per environment. Logical data separation is achieved by using Vault namespaces and policies applied to the tenant.
 

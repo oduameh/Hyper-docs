@@ -22,9 +22,9 @@ PRISM DIDs can be created entirely offline without interacting with the blockcha
 
 ## Prerequisites
 
-1. DID Controller Cloud agent up and running.
+1. DID Controller Cloud agent up and running
 
-## Example overview
+## Overview
 
 For this example, a PRISM DID gets created and stored inside the Cloud agent along with the private keys. It is not automatically published. The Agent will keep track of private keys used for the create-operation and the content of the operation itself.
 
@@ -36,7 +36,7 @@ The Cloud agent provides two endpoint groups to facilitate PRISM DID usage.
 
 ## Endpoints
 
-The example uses the following endpoints.
+The example uses the following endpoints
 
 | Endpoint | Description | Role |
 | :---- | :---- | :---- |

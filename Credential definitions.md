@@ -12,13 +12,13 @@ This section covers creating and managing AnonCreds credential definitions for p
 
 ## Abstract
 
-This document describes the structure, supported formats, and technical intricacies of AnonCred credential definitions within the Identus Platform.
+This document details the structure, supported formats, and technical intricacies of Anoncred Credential Definitions within the Identus Platform.
 
 ## Introduction
 
-An AnonCred credential definition serves as a standardized format for any given AnonCred verifiable credential. By embedding essential attributes unique to each type of credential, it lays the groundwork for diverse categories of verifiable credentials. Integrating this definition on a public blockchain ensures its availability and verifiability for all stakeholders.
+An Anoncred Credential Definition serves as a standardized format for any given Anoncred Verifiable Credential. By embedding essential attributes unique to each type of credential, it lays the groundwork for diverse categories of verifiable credentials. Integrating this definition on a public blockchain ensures its availability and verifiability for all stakeholders.
 
-The Identus Platform endorses the AnonCred credential definition, conforming to the [Hyperledger AnonCreds specification](https://hyperledger.github.io/anoncreds-spec/#term:schemas).
+The Identus Platform endorses the Anoncred Credential Definition, conforming to the [Hyperledger AnonCreds specification](https://hyperledger.github.io/anoncreds-spec/#term:schemas).
 
 ## AnonCred credential definition attributes
 
@@ -136,7 +136,7 @@ Specifies if the credential definition incorporates revocation capabilities.
 
 ## Conclusion
 
-The AnonCred credential definition is a versatile tool that offers a standardized approach for an array of verifiable credentials. By ensuring its correct incorporation within the Identus Platform, the issuance and validation processes of various credentials can be streamlined and made more efficient.
+The Anoncred Credential Definition is a versatile tool that offers a standardized approach for an array of verifiable credentials. By ensuring its correct incorporation within the Identus Platform, the issuance and validation processes of various credentials can be streamlined and made more efficient.
 
 ## References
 
@@ -156,7 +156,7 @@ In this document, you can find step-by-step instructions for creating the creden
 
 ## Prerequisites
 
-Before creating a credential definition, first create and then publish a [PRISM DID](http://../dids/create.md), and then [create a credential schema](http://../schemas/create.md) to be used for the credential definition. The credential schema for the credential definition **must** have a type of `AnoncredSchemaV1` as shown in [this](http://../schemas/credential-schema#schema-anoncred-schema) example.
+Before creating a credential definition, one must first create and then publish [prism DID](http://../dids/create.md), and then [create a credential schema](http://../schemas/create.md) to be used for the credential definition. Credential schema for credential definition **must** have a type of `AnoncredSchemaV1` as shown in [this](http://../schemas/credential-schema#schema-anoncred-schema) example.
 
 ## Step-by-step guide
 

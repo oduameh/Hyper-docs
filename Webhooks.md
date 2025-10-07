@@ -8,17 +8,17 @@ Webhooks enable real-time event notifications from the Cloud agent to your appli
 
 ## Introduction
 
-This tutorial explores how webhook notifications enhance your experience with the Cloud agent by providing real-time updates on events. By leveraging webhook notifications, you stay informed about important changes happening within the agent.
+Welcome to the tutorial on webhook notifications in the Cloud agent. In this tutorial, we will explore how webhook notifications can enhance your experience with the Cloud agent by providing real-time updates on events. By leveraging webhook notifications, you can stay informed about important changes happening within the agent.
 
 ## Understanding webhook notifications
 
 ### What are webhooks?
 
-Webhooks enable real-time communication between applications by sending HTTP requests containing event data to specified endpoints (webhook URLs) when events occur. They establish a direct communication channel, allowing applications to receive instant updates and respond in a timely manner, which promotes efficient integration between event-driven systems.
+Webhooks enable real-time communication between applications by sending HTTP requests containing event data to specified endpoints (webhook URLs) when events occur. They establish a direct communication channel, allowing applications to receive instant updates and respond in a timely manner, promoting efficient integration between event-driven systems.
 
 ### Purpose of webhook notifications in the Cloud agent
 
-Webhook notifications in the Cloud agent serve as a vital feature, enabling you to receive timely updates on various events occurring within the agent. Webhooks allow you to receive HTTP requests containing event details at a specified endpoint (webhook URL). These events are specifically related to the execution of the [Connect](https://hyperledger-identus.github.io/docs/tutorials/connections/connection), [Issue](https://hyperledger-identus.github.io/docs/tutorials/credentials/didcomm/issue), and [Presentation](https://hyperledger-identus.github.io/docs/tutorials/credentials/didcomm/present-proof) flows. Webhook notifications are sent each time there is a state change during the execution of these protocols.
+Webhook notifications in the Cloud agent serve as a vital feature, enabling you to receive timely updates on various events occurring within the agent. Webhooks allow you to receive HTTP requests containing event details at a specified endpoint (webhook URL). These events are specifically related to the execution of the [Connect](https://hyperledger-identus.github.io/docs/tutorials/connections/connection), [Issue](https://hyperledger-identus.github.io/docs/tutorials/credentials/didcomm/issue), and [Presentation](https://hyperledger-identus.github.io/docs/tutorials/credentials/didcomm/present-proof) flows. Webhook notifications will be sent each time there is a state change during the execution of these protocols.
 
 By leveraging webhooks, you can integrate the Cloud agent seamlessly into your applications and systems. You can track and monitor the progress of the main flows, receiving timely updates about changes and events.
 
@@ -26,7 +26,7 @@ By leveraging webhooks, you can integrate the Cloud agent seamlessly into your a
 
 ### Enabling the webhook feature
 
-There are two types of webhook notifications: global webhooks and wallet webhooks. Global webhooks capture all events that happen on the Cloud agent across all wallets, whereas wallet webhooks only capture events that are specific to assets within a particular wallet.
+There are two kinds of webhook notifications: global webhooks and wallet webhooks. Global webhooks capture all events that happen on the Cloud agent across all wallets, whereas wallet webhooks only capture events that are specific to assets within a particular wallet.
 
 **Enable global webhook using environment variables**
 

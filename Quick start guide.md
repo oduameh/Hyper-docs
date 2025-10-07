@@ -2,15 +2,15 @@
 
 ## Introduction to self-sovereign identity (SSI)
 
-[Self-sovereign identity (SSI)](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#self-sovereign-identity) is complex. This quick start guide explains the fundamental concepts you need to get up and running with Hyperledger Identus. It familiarizes you with the core ideas and shows how to create [decentralized identifiers (DIDs)](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#decentralized-identifier), issue credentials, make connections, and verify credentials with [verifiable presentations](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#verifiable-presentation). Refer to the Concepts and Components sections for more detail.
+[Self-sovereign identity (SSI)](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#self-sovereign-identity) is complex. This Quick Start Guide explains the fundamental concepts to get up and running with Hyperledger Identus. This guide will familiarize you with the general concepts and how to create [decentralized identifiers (DIDs)](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#decentralized-identifier), issue credentials, make connections, and verify credentials with [verifiable presentations](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#verifiable-presentation). Refer to the Concepts and Components sections for a more in-depth explanation.
 
-The trust triangle illustrates how digital trust flows. Three roles in an SSI ecosystem collaborate: [Holders](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#holder), [Issuers](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#issuer), and [Verifiers](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#verifier).
+The trust triangle is the most basic process for conveying trust in the digital world. There are three roles in an SSI ecosystem: [Holders](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#holder), [Issuers](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#issuer), and [Verifiers](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#verifier).
 
-Holders can be any entity, such as individuals, organizations, and digital or physical things. They hold [verifiable credentials (VCs)](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#verifiable-credential) and use a verifiable presentation to share their VCs.
+Holders can be any entity, such as individuals, organizations, and digital or physical things. They will hold [verifiable credentials (VCs)](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#verifiable-credential) and use a verifiable presentation to share their VCs.
 
-Issuers can also be any entity that makes [claims](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#claim) about an [entity](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#entity). These claims are attestations, or evidence of something, about the Holder. For example, an insurance company provides proof of valid insurance.
+Issuers can also be any entity that makes [claims](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#claim) about an [entity](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#entity). These claims are attestations, or evidence of something, about the Holder. As an example, an insurance company would provide proof of valid insurance.
 
-Verifiers are the [relying party](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#relying-party) in the triangle. They request information from the Holder, such as proof of insurance, and the Holder uses a verifiable presentation to share the appropriate VCs with the Verifier. The Holder's digital signature, the issuer DID, and the shared contents are verified to ensure nothing has been tampered with.
+Verifiers are the [relying party](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#relying-party) in the triangle. They will request information from the Holder, such as proof of insurance, and the Holder will use a verifiable presentation to share the appropriate VCs with the Verifier. The Holder's digital signature, the issuer DID get verified, and the contents therein to ensure nothing has been tampered with.
 
 ## Hyperledger Identus flow
 
@@ -24,15 +24,15 @@ Identus consists of core libraries that facilitate typical SSI interactions betw
 
 A Cloud agent can issue, hold, and verify [verifiable credentials (VCs)](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#verifiable-credential) for any entity and manage [decentralized identifiers (DIDs)](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#decentralized-identifier) and DID-based connections. The Cloud agent has an easy-to-use REST API to enable easy integration into any solution and uses [DIDComm V2](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#didcomm) as a messaging protocol for Cloud agent-to-Cloud agent communication.
 
-The Hyperledger Identus community maintains it as an open-source project.
+It is maintained as an open source through the [Hyperledger Identus](https://www.hyperledger.org/projects/identus).
 
-More in-depth documentation about the [Cloud agent](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#cloud-agent) is available in the [Cloud agent overview](https://hyperledger-identus.github.io/docs/home/identus/cloud-agent/overview).
+More in-depth documentation about [Cloud agent](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#cloud-agent) can be found in the [Cloud agent overview](https://hyperledger-identus.github.io/docs/home/identus/cloud-agent/overview).
 
 ### Wallet SDKs
 
 [Wallet SDKs](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#wallet-sdk) for web and mobile (iOS, Android, TypeScript) enable identity holders to store credentials and respond to proof requests. They are typically used in applications that allow identity holders to interact with issuers and verifiers.
 
-More in-depth documentation about the different wallet SDKs is available for [TypeScript](https://hyperledger-identus.github.io/docs/sdk-ts/sdk/), [Swift](https://hyperledger-identus.github.io/sdk-swift/documentation/edgeagentsdk/), and [Kotlin Multiplatform](https://hyperledger-identus.github.io/sdk-kmp/).
+More in-depth documentation about the different Wallet SDKs can be found here ([TypeScript](https://hyperledger-identus.github.io/docs/sdk-ts/sdk/), [Swift](https://hyperledger-identus.github.io/sdk-swift/documentation/edgeagentsdk/), [KMP](https://hyperledger-identus.github.io/sdk-kmp/))
 
 ### Mediator
 
@@ -47,11 +47,11 @@ To issue and verify VCs to and from DIDs, we need a [Verifiable Data Registry (V
 
 ### Agent deployment
 
-This guide demonstrates a single-tenant deployment with API key authentication disabled and an in-memory ledger for published DID storage, which is the simplest configuration to start as a developer. More advanced configuration options are available in [Multi-Tenancy Management](https://hyperledger-identus.github.io/docs/tutorials/multitenancy/tenant-onboarding) and the associated [environment variables](https://hyperledger-identus.github.io/docs/home/identus/cloud-agent/environment-variables) configuration options.
+This guide will demonstrate a single-tenant deployment with API Key authentication disabled and an in-memory ledger for published DID storage, which is the simplest configuration to get started as a developer. More advanced configuration options can be found in [Multi-Tenancy Management](https://hyperledger-identus.github.io/docs/tutorials/multitenancy/tenant-onboarding) and associated [Environment Variables](https://hyperledger-identus.github.io/docs/home/identus/cloud-agent/environment-variables) configuration options.
 
-Develop on modern machines equipped with either Intel-based x64 processors or Apple ARM processors with a minimum of four cores, 16 GB of memory, and at least 128 GB of SSD storage.
+We develop on modern machines equipped with either Intel-based x64 processors or Apple ARM processors with a minimum of four cores, 16 GB of memory, and 128GB+ of SSD-type storage.
 
-1. To spin up a Cloud agent, you must:
+1. To spin up a Cloud agent ,you must:  
 * Have Git installed.  
 * Have Docker installed.  
 * Clone the [Identus Cloud agent repository](https://github.com/hyperledger/identus-cloud-agent).
