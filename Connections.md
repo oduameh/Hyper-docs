@@ -17,7 +17,7 @@ The connection protocol has two roles:
 
 ## Prerequisites
 
-1. Inviter and Invitee Cloud agents up and running
+1. Inviter and Invitee Cloud agents up and running.
 
 ## Cloud agent endpoints
 
