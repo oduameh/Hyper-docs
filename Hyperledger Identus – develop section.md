@@ -41,7 +41,8 @@ Alternatively, replace `$API_KEY` with your key in the CURL commands throughout 
 - [Connections](./Connections.md)
 - [DIDs](./DIDs.md)
 - [Schemas](./Schemas.md)
-- [Credential definitions](./Credential%20definitions.md)
+- [Credential definitions](./Credential-definitions.md)
+- [Credentials](./Credentials.md)
 - [Multi-tenancy](./Multi-tenancy.md)
 - [Secret management](./Secret%20management.md)
 - [VDR management](./VDR%20management.md)
@@ -60,7 +61,9 @@ Alternatively, replace `$API_KEY` with your key in the CURL commands throughout 
 
 {{#include Schemas.md}}
 
-{{#include Credential definitions.md}}
+{{#include Credential-definitions.md}}
+
+{{#include Credentials.md}}
 
 {{#include Multi-tenancy.md}}
 
