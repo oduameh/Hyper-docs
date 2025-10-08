@@ -2,9 +2,15 @@
 
 Credential definitions extend AnonCreds schemas with the cryptographic material required for zero-knowledge proofs and selective disclosure. Each definition references a schema and publishes the issuer’s public keys so verifiers can validate credentials securely. This guide explains the structure of a definition and how to create one with the Cloud agent APIs.
 
+## Tutorials at a glance
+
+- [Tutorial 1: Understand AnonCred credential definition attributes](#tutorial-1-understand-anoncred-credential-definition-attributes)
+- [Tutorial 2: Create a credential definition](#tutorial-2-create-a-credential-definition)
+- [Tutorial 3: Delete a credential definition](#tutorial-3-delete-a-credential-definition)
+
 The Identus platform implements the [Hyperledger AnonCreds specification](https://hyperledger.github.io/anoncreds-spec/#term:schemas), so every definition that you publish remains compatible with other AnonCreds agents.
 
-## AnonCred credential definition attributes
+## Tutorial 1: Understand AnonCred credential definition attributes
 
 ### name (String)
 
@@ -118,7 +124,7 @@ Specifies if the credential definition incorporates revocation capabilities.
 
 ---
 
-## Conclusion and references
+### Conclusion and references
 
 AnonCred credential definitions provide a consistent format for verifiable credentials across ecosystems. Replace the placeholders (for example, `{{CREDENTIAL_NAME}}` and `{{VERSION_NUMBER}}`) with production values before you publish a definition.
 
@@ -126,7 +132,7 @@ AnonCred credential definitions provide a consistent format for verifiable crede
 
 ---
 
-## Creating a credential definition
+## Tutorial 2: Create a credential definition
 
 The Cloud agent exposes REST API for creation, fetching, and searching the [credential definition](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#credential-definition) records.
 
@@ -134,18 +140,18 @@ The OpenAPI specification and ReDoc documentation describe the endpoint.
 
 In this document, you can find step-by-step instructions for creating the credential definition.
 
-## Prerequisites
+### Prerequisites
 
 Before you create a credential definition, complete the following tasks:
 
 1. Create and publish a [PRISM DID](http://../dids/create.md).
 2. [Create a credential schema](http://../schemas/create.md) with the type `AnoncredSchemaV1`, as shown in the [example](http://../schemas/credential-schema#schema-anoncred-schema).
 
-## Step-by-step guide
+### Step-by-step guide
 
 The following guide demonstrates how to create a birth certificate credential definition.
 
-### Define the Credential Definition for the Verifiable Credential
+#### Define the Credential Definition for the Verifiable Credential
 
 Assume you are aiming to define a credential for birth certificates. This credential definition has specific properties and ties to a schema in the Cloud agent.
 
@@ -164,7 +170,7 @@ Here's a sample content of the credential definition:
 }
 ```
 
-### Create the Credential Definition Record
+#### Create the Credential Definition Record
 
 1. Use your preferred REST API client, such as Postman or Insomnia, or utilize a client stub that's generated based on the OpenAPI specification.  
      
@@ -235,7 +241,7 @@ A potential response could be:
 }
 ```
 
-### Retrieve the Created Credential Definition
+#### Retrieve the Created Credential Definition
 
 To obtain details of the newly created credential definition, send a GET request to either `/credential-definition-registry/definitions/{guid}` or `/credential-definition-registry/definitions/did-url/{guid}` endpoints. Replace `{guid}` with the unique GUID returned from the previous creation step. Note that if you've created a credential definitoin via HTTP URL endpoint, you can retrieve it via `/credential-definition-registry/definitions/{guid}` and if you've created credential definition via DID URL endpoint, it can only be retrieved via `/credential-definition-registry/definitions/did-url/{guid}`
 
@@ -297,9 +303,11 @@ To update or upgrade an existing credential definition, follow the steps outline
 2. Update the `version` value to reflect the changes made. This is important to ensure that each version of the credential definition remains distinct.  
 3. Create a new credential definition entry with the updated version and schema.
 
-## Note: When you make changes to an existing credential definition, it's essential to version the new entry accurately. This ensures clarity and avoids potential conflicts or misunderstandings among different versions of the same definition.
+### Versioning guidance
 
-## Deleting a credential definition
+When you update an existing credential definition, publish a new semantic version so issuers and verifiers can distinguish the latest configuration from previous releases. This avoids conflicts between definitions that share the same name and schema.
+
+## Tutorial 3: Delete a credential definition
 
 Unfortunately, once published (especially in the [Verifiable Data Registry (VDR)](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#verifiable-data-registry), deleting the credential definition becomes unfeasible.
 
@@ -309,7 +317,9 @@ If you need to `delete` the credential definition, it's advisable to contact the
 
 For example:
 
-````sql
+```sql
 DELETE
 FROM credential_definition
 WHERE guid = '3f86a73f-5b78-39c7-af77-0c16123fa9c2'
+```
+

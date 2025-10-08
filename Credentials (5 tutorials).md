@@ -1,22 +1,24 @@
 # Credentials (5 tutorials)
 
-## Overview
+## Tutorials at a glance
 
-This section covers the complete credential lifecycle: issuance, holding, presentation, and revocation. Hyperledger Identus supports multiple credential formats (JWT, SD-JWT, AnonCreds) and issuance methods (DIDComm, connectionless, OID4VCI).
+This guide gathers the end-to-end credential lifecycle into five focused tutorials. Each walkthrough highlights a specific delivery or verification channel so you can follow only the flows you need.
 
-Credential issuance involves an issuer offering a credential to a holder, who accepts and stores it. Credential presentation involves a verifier requesting proof, and a holder creating a verifiable presentation. The tutorials in this section guide you through each method and format.
+- [Tutorial 1: Issue credentials over DIDComm](#tutorial-1-issue-credentials-over-didcomm)
+- [Tutorial 2: Issue credentials without a connection](#tutorial-2-issue-credentials-without-a-connection)
+- [Tutorial 3: Issue credentials with OID4VCI](#tutorial-3-issue-credentials-with-oid4vci)
+- [Tutorial 4: Present proof over DIDComm](#tutorial-4-present-proof-over-didcomm)
+- [Tutorial 5: Manage credential revocation](#tutorial-5-manage-credential-revocation)
 
 ---
 
-## Issuing credentials (DIDComm)
-
-# Issue credentials (DIDComm)
+## Tutorial 1: Issue credentials over DIDComm
 
 In the Identus Platform, the [Issue Credentials Protocol](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#issue-credential-protocol) allows you
 to create, retrieve, and manage issued [verifiable credentials (VCs)](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#verifiable-credentials)
 between a VC issuer and a VC holder.
 
-## Roles
+### Roles
 
 In the Issue Credentials Protocol, there are two roles:
 
@@ -27,7 +29,7 @@ In the Issue Credentials Protocol, there are two roles:
 
 The Issuer and Holder interact with the Identus Cloud agent API to perform the operations defined in the protocol.
 
-## Prerequisites
+### Prerequisites
 
 Before using the Issuing Credentials protocol, the following conditions must be present:
 
@@ -71,7 +73,7 @@ Before using the Issuing Credentials protocol, the following conditions must be 
 </TabItem>
 </Tabs>
 
-## Overview
+### Overview
 
 The protocol described is a VC issuance process between two Identus Cloud agents, the Issuer and the Holder.
 
@@ -97,7 +99,7 @@ and more.
 In these scenarios, the Issuer could be a school, an employer, etc., and the Holder could be a student or an employee.
 The VCs issued during this protocol could represent a diploma, a certificate of employment, etc.
 
-## Endpoints
+### Endpoints
 
 | Endpoint                                                                                                                           | Description                                                                              | Role           |
 |------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------|----------------|
@@ -111,11 +113,11 @@ The VCs issued during this protocol could represent a diploma, a certificate of 
 Please check the full [Cloud agent API](https://hyperledger-identus.github.io/docs/agent-api) specification for more detailed information.
 :::
 
-## Issuer interactions
+### Issuer interactions
 
 This section describes the Issuer role's available interactions with the Cloud agent.
 
-### Creating a Credential Offer
+#### Creating a Credential Offer
 
 To start the process, the issuer needs to create a credential offer.
 To do this, make a `POST` request to
@@ -329,11 +331,11 @@ curl -X 'POST' \
         }'
 ```
 
-### Sending the Offer to the Holder
+#### Sending the Offer to the Holder
 
 The next step for the Issuer is to send the offer to the holder using DIDComm. To do this, the Issuer agent will process the offer and send it to the holder agent. This process is automatic. The state of the Issuer's record will change to `OfferSent`.
 
-### Issuing the Credential
+#### Issuing the Credential
 
 Once the holder has approved the offer and sent a request to the Issuer, the Issuer will receive the request via DIDComm and update the record state to `RequestReceived.`
 
@@ -366,11 +368,11 @@ stateDiagram-v2
   CredentialGenerated --> CredentialSent: send credential (auto via Cloud agent)
 ```
 
-## Holder interactions
+### Holder interactions
 
 This section describes the Holder role's available interactions with the Cloud agent.
 
-### Receiving the VC Offer
+#### Receiving the VC Offer
 
 The Holder will receive the offer from the Issuer via DIDComm, and a new credential record with a unique ID gets created in the `OfferReceived` state.
 
@@ -385,7 +387,7 @@ curl "http://localhost:8090/cloud-agent/issue-credentials/records" \
     -H "apikey: $API_KEY"
 ```
 
-### Approving the VC Offer
+#### Approving the VC Offer
 
 To accept the offer, the Holder can make a `POST` request to the [`/issue-credentials/records/{recordId}/accept-offer`](https://hyperledger-identus.github.io/docs/agent-api/#tag/Issue-Credentials-Protocol/operation/acceptCredentialOffer) endpoint with a JSON payload that includes the following information:
 
@@ -501,7 +503,7 @@ curl -X POST "http://localhost:8090/cloud-agent/issue-credentials/records/$holde
 
 This request will change the state of the record to `RequestPending`.
 
-### Receiving the VC Credential
+#### Receiving the VC Credential
 
 Once the Holder has approved the offer and sent a request to the Issuer, the Holder agent will process the request and send it to the Issuer agent. The state of the Holder's record will change to `RequestSent`.
 
@@ -520,17 +522,17 @@ stateDiagram-v2
   RequestSent --> CredentialReceived: receive credential (auto via Cloud agent)
 ```
 
-## Sequence diagram
+### Sequence diagram
 
 The following diagram shows the end-to-end flow for an issuer to issue a VC to a holder.
 
 ---
 
-## Issuing credentials (connectionless)
+## Tutorial 2: Issue credentials without a connection
 
 In the Identus Platform, the [Issue Credentials Protocol](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#issue-credential-protocol) allows you to create, retrieve, and manage issued [verifiable credentials (VCs)](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#verifiable-credentials) between a VC issuer and a VC holder.
 
-## Roles
+### Roles
 
 In the Issue Credentials Protocol, there are two roles:
 
@@ -539,7 +541,7 @@ In the Issue Credentials Protocol, there are two roles:
 
 The Issuer and Holder interact with the Identus Cloud agent API to perform the operations defined in the protocol.
 
-## Prerequisites
+### Prerequisites
 
 Before using the "Connectionless" Issuing Credentials protocol, the following conditions must be present:
 
@@ -556,7 +558,7 @@ Before using the "Connectionless" Issuing Credentials protocol, the following co
 3. The Holder is either another Cloud agent or Edge Agent SDK  
 4. The Holder must have a PRISM DID, and the DID document must have at least one `authentication` key for presenting the proof and the curve must be `Ed25519`.
 
-## Overview
+### Overview
 
 The protocol described is a VC issuance process between an Issuer (Identus Cloud agent) and Holder (Identus Edge Agent SDK).
 
@@ -572,7 +574,7 @@ The claims provide specific information about the individual, such as their name
 
 This protocol is applicable in various real-life scenarios, such as educational credentialing, employment verification, and more. In these scenarios, the Issuer could be a school, an employer, etc., and the Holder could be a student or an employee. The VCs issued during this protocol could represent a diploma, a certificate of employment, etc.
 
-## Endpoints
+### Endpoints
 
 | Endpoint | Description | Role |
 | :---- | :---- | :---- |
@@ -585,11 +587,11 @@ This protocol is applicable in various real-life scenarios, such as educational 
 
 :::info Please check the full [Cloud agent API](https://hyperledger-identus.github.io/docs/agent-api) specification for more detailed information. :::
 
-## Issuer interactions
+### Issuer interactions
 
 This section describes the Issuer role's available interactions with the Cloud agent.
 
-### Creating a Credential Offer
+#### Creating a Credential Offer
 
 To start the process, the issuer needs to create a credential offer invitation. To do this, make a `POST` request to the [`/issue-credentials/credential-offers/invitation`](https://hyperledger-identus.github.io/docs/agent-api/#tag/Issue-Credentials-Protocol/operation/createCredentialOffer) endpoint with a JSON payload that includes the following information:
 
@@ -689,11 +691,11 @@ curl -X 'POST' \
         }'
 ```
 
-### Sending the Offer to the Holder
+#### Sending the Offer to the Holder
 
 The next step for the Issuer is to send the OOB invite Holder (by definition, this is "out of band", so not handled by Identus). Common ways to convey such OOB invites might be a QR code that is scanned, or via an existing channel of connection in an application.
 
-### Issuing the Credential
+#### Issuing the Credential
 
 Once the holder has approved the offer and sent a request to the Issuer, the Issuer will receive the request via DIDComm and update the record state to `RequestReceived.`
 
@@ -726,11 +728,11 @@ stateDiagram-v2
   CredentialGenerated --> CredentialSent: send credential (auto via PRISM Agent)
 ```
 
-## Holder interactions
+### Holder interactions
 
 This section describes the Holder role's available interactions with the Cloud agent.
 
-### Receiving the VC Offer
+#### Receiving the VC Offer
 
 The Holder will receive the offer from the Issuer via DIDComm, and a new credential record with a unique ID gets created in the `OfferReceived` state.
 
@@ -745,7 +747,7 @@ curl "http://localhost:8090/cloud-agent/issue-credentials/records" \
     -H "apikey: $API_KEY"
 ```
 
-### Approving the VC Offer
+#### Approving the VC Offer
 
 To accept the offer, the Holder can make a `POST` request to the [`/issue-credentials/records/{recordId}/accept-offer`](https://hyperledger-identus.github.io/docs/agent-api/#tag/Issue-Credentials-Protocol/operation/acceptCredentialOffer) endpoint with a JSON payload that includes the following information:
 
@@ -861,7 +863,7 @@ curl -X POST "http://localhost:8090/cloud-agent/issue-credentials/records/$holde
 
 This request will change the state of the record to `RequestPending`.
 
-### Receiving the VC Credential
+#### Receiving the VC Credential
 
 Once the Holder has approved the offer and sent a request to the Issuer, the Holder agent will process the request and send it to the Issuer agent. The state of the Holder's record will change to `RequestSent`.
 
@@ -880,19 +882,19 @@ stateDiagram-v2
   RequestSent --> CredentialReceived: receive credential (auto via PRISM Agent)
 ```
 
-## Sequence diagram
+### Sequence diagram
 
 TODO
 
 ---
 
-## Issuing credentials (OID4VCI)
+## Tutorial 3: Issue credentials with OID4VCI
 
 [OID4VCI](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#oid4vci) (OpenID for Verifiable Credential Issuance) is a protocol that extends OAuth2 to issue credentials. It involves a Credential Issuer server and an Authorization server working together, using the authorization and token endpoints on the Authorization Server to grant holders access to credentials on the Credential Issuer server. These servers may or may not be the same, depending on the implementation.
 
 The Identus Cloud agent can act as a Credential Issuer server and integrate with any Authorization Server that follows the integration contract. The contract for the Authorization Server in the OID4VCI flow see the \[https://github.com/hyperledger-identus/cloud-agent/blob/main/docs/general/authserver-oid4vci-contract.md).
 
-## Example: OID4VCI Authorization Code Issuance
+### Example: OID4VCI Authorization Code Issuance
 
 Example is available in the \[https://github.com/hyperledger-identus/cloud-agent/tree/main/examples/st-oid4vci).
 
@@ -955,7 +957,7 @@ After a successful login, this log should appear indicating the demo application
 }
 ```
 
-## Presenting proof (DIDComm)
+## Tutorial 4: Present proof over DIDComm
 
 The [Present Proof Protocol](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#present-proof-protocol) allows:
 
@@ -964,14 +966,14 @@ The [Present Proof Protocol](https://hyperledger-identus.github.io/docs/home/con
 
 The protocol provides endpoints for a Verifier to request new proof presentations from Holder/Provers and for a Holder/Prover to respond to the presentation request using a specific verifiable credential they own.
 
-## Roles
+### Roles
 
 The present proof protocol has two roles:
 
 1. Verifier: A subject requesting a proof presentation by sending a request presentation message, then verifying the presentation.  
 2. Holder/Prover: A [subject](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#subject) that receives a [proof presentation](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#proof-presentation) request, prepares a proof, and sends it to the verifier by sending a proof presentation message.
 
-## Prerequisites
+### Prerequisites
 
 Before using the Proof Presentation protocol, the following conditions must be present:
 
@@ -979,7 +981,7 @@ Before using the Proof Presentation protocol, the following conditions must be p
 2. A connection must be established between the Holder/Prover and Verifier Cloud agents (see [Connections](https://hyperledger-identus.github.io/docs/connections/connection.md))  
 3. The Holder/Prover should hold a [verifiable credential (VC)](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#verifiable-credential) received from an [Issuer](https://hyperledger-identus.github.io/docs/home/concepts/glossary/#issuer) see [Issue](https://hyperledger-identus.github.io/docs/tutorials/issue.md).
 
-## Overview
+### Overview
 
 This protocol supports the presentation of verifiable claims between two Cloud agents, the Holder/Prover and the Verifier.
 
@@ -990,7 +992,7 @@ The protocol consists of the following main parts:
 3. The Holder/Prover can then review and accept a specific request using the [`/present-proof/presentations/{presentationId}`](https://hyperledger-identus.github.io/docs/agent-api/#tag/Present-Proof/operation/updatePresentation) endpoint, providing the identifier of the `credential` record to use in the proof presentation.  
 4. The Verifier receives the proof presentation from the Holder/Prover and can accept it using the [`/present-proof/presentations/{presentationId}`](https://hyperledger-identus.github.io/docs/agent-api/#tag/Present-Proof/operation/updatePresentation) endpoint, specifying `presentation-accept` as the action type.
 
-## Endpoints
+### Endpoints
 
 | Endpoint | Method | Description | Role |
 | :---- | :---- | :---- | :---- |
@@ -1001,11 +1003,11 @@ The protocol consists of the following main parts:
 
 :::info For more detailed information, please, check the full [Cloud agent API](https://hyperledger-identus.github.io/docs/agent-api). :::
 
-## Verifier interactions
+### Verifier interactions
 
 This section describes the interactions available to the Verifier with the Cloud agent.
 
-### Creating and sending a Presentation Request
+#### Creating and sending a Presentation Request
 
 The Verifier needs to create a proof presentation request to start the process. To do this, he makes a `POST` request to the [`/present-proof/presentations`](https://hyperledger-identus.github.io/docs/agent-api/#tag/Present-Proof/operation/requestPresentation) endpoint with a JSON payload that includes the following information:
 
@@ -1131,7 +1133,7 @@ curl -X 'GET' 'http://localhost:8070/cloud-agent/present-proof/presentations' \
  -H "apikey: $API_KEY"
 ```
 
-### Accept presentation proof received from the Holder/prover
+#### Accept presentation proof received from the Holder/prover
 
 Once the Holder/Prover has received a proof presentation request, he can accept it using an appropriate verifiable credential. The Cloud agent of the Verifier will receive that proof and verify it. Upon successful verification, the presentation record state gets updated to `PresentationVerified`.
 
@@ -1158,11 +1160,11 @@ stateDiagram-v2
   PresentationVerified --> PresentationAccepted: verified presentation proof explicitly accepted by the Verifier
 ```
 
-## Holder/Prover
+### Holder/Prover
 
 This section describes the interactions available to the Holder/Prover with his Cloud agent.
 
-### Reviewing and accepting a received presentation request
+#### Reviewing and accepting a received presentation request
 
 The Holder/Prover can retrieve the list of presentation requests received by its Cloud agent from different Verifiers making a `GET` request to the [`/present-proof/presentations`](https://hyperledger-identus.github.io/docs/agent-api/#tag/Present-Proof/operation/getAllPresentation) endpoint:
 
@@ -1257,17 +1259,17 @@ stateDiagram-v2
   PresentationGenerated --> PresentationSent: generated proof sent to the Verifier PRISM Agent
 ```
 
-## Sequence diagram
+### Sequence diagram
 
 The following diagram shows the end-to-end flow for a verifier to request and verify a proof presentation from a Holder/prover.
 
 ---
 
-## Credential revocation
+## Tutorial 5: Manage credential revocation
 
 Identus implements the revocation mechanism of JWT credentials according to [Verifiable Credentials Status List v2021](https://www.w3.org/TR/2023/WD-vc-status-list-20230427/). This open standard enables Identus to verify the revocation status of any credential that implements the revocation mechanism using the same specification.
 
-## Overview
+### Overview
 
 Every credential will contain the property `credentialStatus`, which will look like this:
 
@@ -1311,7 +1313,7 @@ Every credential will contain the property `credentialStatus`, which will look l
 
 The status list credential contains  `encodedList`, a base64-encoded bit string that contains the credential's revocation status.
 
-## Verification
+### Verification
 
 To verify the revocation status of the credential, one must follow these steps:
 
@@ -1320,7 +1322,7 @@ To verify the revocation status of the credential, one must follow these steps:
 3. Decode bit-string, which is in the JSON document of the Status list credential, found at path \- `credentialSubject.encodedList`  
 4. Use the status list index from `credentialStatus.statusListIndex` to check if the bit at this index in the decoded bit-string from step 3 is on or off. If the bit is on, the credential is revoked. Otherwise, a revocation has yet to occur.
 
-## Proof verification
+### Proof verification
 
 Status list credential integrity can be verified using the embedded proof.
 
@@ -1395,7 +1397,7 @@ We currently support 2 types of proofs:
 
 ```
 
-## Revocation
+### Revocation
 
 Only issuers of a credential can revoke a credential.
 
